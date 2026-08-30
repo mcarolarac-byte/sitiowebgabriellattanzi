@@ -9,13 +9,3 @@ export async function register() {
     await import("../sentry.edge.config");
   }
 }
-
-// Captura errores no controlados en React Server Components
-export const onRequestError = async (
-  err: unknown,
-  request: Request,
-  context: { routerKind: string; routePath: string; routeType: string }
-) => {
-  const { captureRequestError } = await import("@sentry/nextjs");
-  captureRequestError(err, request, context);
-};
