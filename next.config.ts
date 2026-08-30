@@ -66,7 +66,7 @@ export default withSentryConfig(nextConfig, {
   // Silencia el output de Sentry durante el build
   silent: !process.env.CI,
   // Oculta los source maps del bundle público (los sube a Sentry cifrados)
-  hideSourceMaps: true,
+  sourcemaps: { deleteSourcemapsAfterUpload: true },
   // Desactiva logs internos de Sentry en runtime
   disableLogger: true,
 });
