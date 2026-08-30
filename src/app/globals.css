@@ -3,8 +3,9 @@
 :root {
   --color-ink: #14213d;
   --color-ink-soft: #1f3157;
-  --color-paper: #faf7f0;
-  --color-paper-dim: #f1ecdf;
+  --color-paper: #FBF9F4;
+  --color-paper-hero: #F5F0E6;
+  --color-paper-dim: #EBE4D7;
   --color-brass: #a67c34;
   --color-brass-light: #c99a4d;
   --color-pine: #1f4a3d;
@@ -17,6 +18,7 @@
   --color-ink: var(--color-ink);
   --color-ink-soft: var(--color-ink-soft);
   --color-paper: var(--color-paper);
+  --color-paper-hero: var(--color-paper-hero);
   --color-paper-dim: var(--color-paper-dim);
   --color-brass: var(--color-brass);
   --color-brass-light: var(--color-brass-light);

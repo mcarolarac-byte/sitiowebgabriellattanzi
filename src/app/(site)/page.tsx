@@ -7,7 +7,7 @@ import { bio, hero, services, site, trustPoints } from "@/lib/content";
 export default function Home() {
   return (
     <>
-      <section className="border-b border-line">
+      <section className="border-b border-line bg-paper-hero">
         <Container className="grid gap-12 py-20 sm:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="font-data text-xs uppercase tracking-[0.2em] text-brass">
@@ -33,8 +33,11 @@ export default function Home() {
                 {hero.ctaSecondary.label}
               </Link>
             </div>
+            <p className="mt-6 font-body text-sm text-slate-soft">
+              {hero.modalidad}
+            </p>
           </div>
-          <div>
+          <div className="relative">
             <div className="relative">
               <div
                 aria-hidden="true"
@@ -50,11 +53,23 @@ export default function Home() {
                   className="object-cover"
                 />
               </div>
+              {/* Tarjeta flotante sobre la foto — solo desktop */}
+              <div className="absolute bottom-8 -left-8 z-10 hidden max-w-[260px] bg-paper p-5 shadow-xl lg:block">
+                <p className="font-display text-base font-semibold italic leading-snug text-ink">
+                  &ldquo;{hero.quote}&rdquo;
+                </p>
+              </div>
             </div>
             <Horizon className="mt-8 w-full" />
             <p className="mt-4 font-body text-sm text-slate-soft">
               {site.name} · {site.location}
             </p>
+            {/* Frase en móvil — versión inline */}
+            <blockquote className="mt-6 border-l-2 border-brass pl-4 lg:hidden">
+              <p className="font-display text-base italic text-ink">
+                &ldquo;{hero.quote}&rdquo;
+              </p>
+            </blockquote>
           </div>
         </Container>
       </section>
@@ -112,6 +127,9 @@ export default function Home() {
             <p className="font-data text-xs uppercase tracking-[0.2em] text-brass-light">
               Quién soy
             </p>
+            <h2 className="mt-3 font-display text-2xl font-semibold text-paper">
+              Experiencia ejecutiva. Mirada humana.
+            </h2>
             <p className="mt-4 font-body text-lg leading-relaxed text-paper/85">
               {bio.introShort}
             </p>

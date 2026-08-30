@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Container } from "./Container";
-import { complianceNote, site } from "@/lib/content";
+import { complianceNote, disclaimers, site } from "@/lib/content";
 
 export function Footer() {
   return (
@@ -26,11 +26,21 @@ export function Footer() {
             <p className="text-paper/60">{site.location}</p>
           </div>
         </div>
-        <div className="flex flex-col gap-3 border-t border-paper/15 pt-6 text-xs text-paper/55 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-2xl leading-relaxed">{complianceNote}</p>
-          <Link href="/privacidad" className="focus-ring shrink-0 rounded underline">
-            Aviso de privacidad
-          </Link>
+        <div className="flex flex-col gap-4 border-t border-paper/15 pt-6 text-xs text-paper/55">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-2xl leading-relaxed">{complianceNote}</p>
+            <Link href="/privacidad" className="focus-ring shrink-0 rounded underline">
+              Aviso de privacidad
+            </Link>
+          </div>
+          <ul className="flex flex-col gap-2 border-t border-paper/10 pt-4">
+            {disclaimers.map((text, i) => (
+              <li key={i} className="leading-relaxed text-paper/40">
+                <span className="mr-1 font-semibold text-paper/55">{i + 1}.</span>
+                {text}
+              </li>
+            ))}
+          </ul>
         </div>
       </Container>
     </footer>

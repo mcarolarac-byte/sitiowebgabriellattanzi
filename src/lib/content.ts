@@ -12,22 +12,23 @@ export const site = {
 };
 
 export const hero = {
-  eyebrow: "Acompañamiento y educación financiera",
-  headline: "Tu retiro no debería depender de la suerte.",
+  eyebrow: "Claridad para decidir. Método para avanzar.",
+  headline: "Tu futuro financiero merece algo más que improvisación.",
   subhead:
-    "Te ayudo a construir un plan claro para tu jubilación y a entender cómo funcionan realmente las inversiones — con el rigor de más de 11 años analizando mercados globales.",
-  ctaPrimary: { label: "Agenda una primera llamada", href: "/contacto#agenda" },
-  ctaSecondary: { label: "Conoce mi trayectoria", href: "/quien-soy" },
+    "Te acompaño a entender tus finanzas, ordenar tus prioridades y construir una estrategia propia para el retiro y la inversión.",
+  ctaPrimary: { label: "Agendar una conversación", href: "/contacto#agenda" },
+  ctaSecondary: { label: "Conoce cómo trabajo", href: "/que-hago" },
+  modalidad:
+    "Atención presencial en Barcelona, España. Atención online para el resto de Europa, Latinoamérica y Norteamérica.",
+  quote:
+    "La tranquilidad financiera no nace de predecir el mercado, sino de tener un plan.",
 };
 
 export const trustPoints = [
-  { label: "Años analizando mercados", value: "11+" },
-  { label: "Certificación", value: "MiFID II" },
-  { label: "Formación", value: "Executive MBA · IESA" },
-  {
-    label: "Países de experiencia corporativa (Venezuela, México, Argentina)",
-    value: "3",
-  },
+  { label: "años de experiencia", value: "+11" },
+  { label: "trayectoria internacional", value: "LATAM" },
+  { label: "Executive MBA · IESA", value: "EMBA" },
+  { label: "formación financiera", value: "MiFID II" },
 ];
 
 export const bio = {
@@ -116,3 +117,9 @@ export const services = [
 
 export const complianceNote =
   "Gabriel Lattanzi ofrece servicios de acompañamiento, mentoría y educación financiera. Esto no constituye asesoría de inversión regulada ni gestión de patrimonio de terceros.";
+
+export const disclaimers = [
+  "La inversión en mercados financieros conlleva riesgos significativos, incluyendo la posible pérdida parcial o total del capital invertido. Los instrumentos financieros pueden fluctuar tanto al alza como a la baja.",
+  "Las rentabilidades o rendimientos obtenidos en el pasado no constituyen garantía ni indicador de resultados futuros. Ninguna estrategia de inversión asegura beneficios.",
+  "Los contenidos de este sitio son exclusivamente informativos y educativos. No constituyen asesoría de inversión regulada, gestión de carteras ni recomendación de compra o venta de ningún instrumento financiero.",
+];
