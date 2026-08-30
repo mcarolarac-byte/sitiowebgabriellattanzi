@@ -12,16 +12,16 @@ export const site = {
 };
 
 export const hero = {
-  eyebrow: "Claridad para decidir. Método para avanzar.",
-  headline: "Tu futuro financiero merece algo más que improvisación.",
+  eyebrow: "Claridad para decidir. Método para avanzar",
+  headline: "Tu futuro financiero merece algo más que improvisación",
   subhead:
-    "Te acompaño a entender tus finanzas, ordenar tus prioridades y construir una estrategia propia para el retiro y la inversión.",
+    "Te acompaño a entender tus finanzas, ordenar tus prioridades y construir una estrategia propia para el retiro y la inversión",
   ctaPrimary: { label: "Agendar una conversación", href: "/contacto#agenda" },
   ctaSecondary: { label: "Conoce cómo trabajo", href: "/que-hago" },
   modalidad:
     "Atención presencial en Barcelona, España. Atención online para el resto de Europa, Latinoamérica y Norteamérica.",
   quote:
-    "La tranquilidad financiera no nace de predecir el mercado, sino de tener un plan.",
+    "La tranquilidad financiera no nace de predecir el mercado, sino de tener un plan",
 };
 
 export const trustPoints = [

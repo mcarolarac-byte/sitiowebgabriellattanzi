@@ -128,7 +128,7 @@ export default function Home() {
               Quién soy
             </p>
             <h2 className="mt-3 font-display text-2xl font-semibold text-paper">
-              Experiencia ejecutiva. Mirada humana.
+              Experiencia ejecutiva. Mirada humana
             </h2>
             <p className="mt-4 font-body text-lg leading-relaxed text-paper/85">
               {bio.introShort}

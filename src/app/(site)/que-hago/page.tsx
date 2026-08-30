@@ -63,7 +63,7 @@ export default function QueHago() {
       <section>
         <Container className="flex flex-col items-start gap-6 py-16 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="max-w-lg font-display text-2xl font-semibold text-ink">
-            El primer paso es una conversación, sin costo.
+            El primer paso es una conversación, sin costo
           </h2>
           <Link
             href="/contacto#agenda"

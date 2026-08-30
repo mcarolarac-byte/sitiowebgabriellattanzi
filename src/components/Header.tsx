@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "./Container";
 import { site } from "@/lib/content";
 
@@ -17,7 +18,15 @@ export function Header() {
           href="/"
           className="focus-ring rounded font-display text-xl font-semibold tracking-tight text-ink"
         >
-          {site.name}
+          <Image
+            src="/logo-gl.png"
+            alt={site.name}
+            width={40}
+            height={40}
+            className="block md:hidden"
+            priority
+          />
+          <span className="hidden md:inline">{site.name}</span>
         </Link>
         <nav aria-label="Principal" className="hidden gap-8 md:flex">
           {navLinks.map((link) => (
