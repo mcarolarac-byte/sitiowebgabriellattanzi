@@ -8,7 +8,7 @@ export const site = {
   contactEmail: "contacto@gabriellattanzi.com",
   location: "Barcelona, España — atiende a LATAM de forma remota",
   linkedin: "https://www.linkedin.com/in/gabriellattanzi/",
-  calendlyUrl: "https://calendly.com/gabriellattanzi", // [BORRADOR] confirmar usuario real de Calendly
+  calendlyUrl: "https://calendly.com/plattanzi2014/30min",
 };
 
 export const hero = {
