@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ink: #14213d;
+  --color-ink-soft: #1f3157;
+  --color-paper: #faf7f0;
+  --color-paper-dim: #f1ecdf;
+  --color-brass: #a67c34;
+  --color-brass-light: #c99a4d;
+  --color-pine: #1f4a3d;
+  --color-slate: #3d4148;
+  --color-slate-soft: #6b6f76;
+  --color-line: #ded5bd;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-paper: var(--color-paper);
+  --color-paper-dim: var(--color-paper-dim);
+  --color-brass: var(--color-brass);
+  --color-brass-light: var(--color-brass-light);
+  --color-pine: var(--color-pine);
+  --color-slate: var(--color-slate);
+  --color-slate-soft: var(--color-slate-soft);
+  --color-line: var(--color-line);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-plex-sans);
+  --font-data: var(--font-plex-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-slate);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--color-brass-light);
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 3px;
+}
+
+.prose-financiero h2 {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+.prose-financiero h3 {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.prose-financiero p {
+  margin-bottom: 1.25rem;
+}
+.prose-financiero ul,
+.prose-financiero ol {
+  margin: 1.25rem 0 1.25rem 1.5rem;
+  list-style: disc;
+}
+.prose-financiero a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-brass);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
