@@ -4,6 +4,7 @@ import "../globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { site } from "@/lib/content";
+import { CookieBanner } from "@/components/CookieBanner";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <CookieBanner />
       </body>
     </html>
   );

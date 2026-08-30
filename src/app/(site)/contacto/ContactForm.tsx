@@ -127,6 +127,25 @@ export function ContactForm() {
         <div className="cf-turnstile" data-sitekey={turnstileSiteKey} />
       )}
 
+      {/* GDPR: consentimiento obligatorio para tratamiento de datos */}
+      <div className="flex items-start gap-3">
+        <input
+          id="consent"
+          name="consent"
+          type="checkbox"
+          required
+          className="focus-ring mt-0.5 h-4 w-4 shrink-0 rounded-sm border border-line accent-ink"
+        />
+        <label htmlFor="consent" className="font-body text-xs leading-relaxed text-slate">
+          He leído y acepto la{" "}
+          <a href="/privacidad" className="underline hover:text-ink" target="_blank" rel="noopener noreferrer">
+            Política de Privacidad
+          </a>{" "}
+          y autorizo el tratamiento de mis datos personales para que Gabriel Lattanzi pueda
+          responder a mi consulta. No se usarán para ningún otro fin sin mi consentimiento.
+        </label>
+      </div>
+
       {state.status === "error" && state.message && (
         <p role="alert" className="font-body text-sm text-red-700">
           {state.message}
