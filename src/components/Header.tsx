@@ -4,8 +4,8 @@ import { Container } from "./Container";
 import { site } from "@/lib/content";
 
 const navLinks = [
-  { href: "/quien-soy", label: "Quién soy" },
-  { href: "/que-hago", label: "Qué hago" },
+  { href: "/quien-soy", label: "¿Quién soy?" },
+  { href: "/que-hago", label: "¿Qué hago?" },
   { href: "/blog", label: "Blog" },
   { href: "/contacto", label: "Contacto" },
 ];
@@ -23,10 +23,10 @@ export function Header() {
             alt={site.name}
             width={40}
             height={40}
-            className="block md:hidden"
+            className="block"
             priority
           />
-          <span className="hidden md:inline">{site.name}</span>
+          <span className="hidden md:inline ml-3">{site.name}</span>
         </Link>
         <nav aria-label="Principal" className="hidden gap-8 md:flex">
           {navLinks.map((link) => (

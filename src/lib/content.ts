@@ -6,7 +6,7 @@ export const site = {
   tagline: "Acompañamiento y educación financiera",
   baseUrl: "https://gabriellattanzi.com", // actualizar cuando exista el dominio real
   contactEmail: "contacto@gabriellattanzi.com",
-  location: "Barcelona, España — atiende a LATAM de forma remota",
+  location: "Barcelona, España — atención online para todo el mundo",
   linkedin: "https://www.linkedin.com/in/gabriellattanzi/",
   calendlyUrl: "https://calendly.com/plattanzi2014/30min",
 };
@@ -19,7 +19,7 @@ export const hero = {
   ctaPrimary: { label: "Agendar una conversación", href: "/contacto#agenda" },
   ctaSecondary: { label: "Conoce cómo trabajo", href: "/que-hago" },
   modalidad:
-    "Atención presencial en Barcelona, España. Atención online para el resto de Europa, Latinoamérica y Norteamérica.",
+    "Atención presencial en Barcelona, España. Atención online para el resto del mundo.",
   quote:
     "La tranquilidad financiera no nace de predecir el mercado, sino de tener un plan",
 };
