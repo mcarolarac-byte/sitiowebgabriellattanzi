@@ -91,3 +91,78 @@ npm run dev
 ```
 
 Abre [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Para el equipo de desarrollo
+
+### Prerrequisitos
+
+- Node.js 20 o superior (`node -v` para verificar)
+- npm 10 o superior
+- Cuenta en Vercel (deploy) y Sanity (CMS)
+
+### Setup inicial
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/mcarolarac-byte/sitiowebgabriellattanzi.git
+cd sitiowebgabriellattanzi
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Configurar variables de entorno
+cp .env.local.example .env.local
+# Completar los valores en .env.local (ver tabla en sección 3)
+
+# 4. Levantar en local
+npm run dev
+# → http://localhost:3000   (sitio)
+# → http://localhost:3000/studio  (panel Sanity)
+```
+
+### Flujo de ramas (branching)
+
+| Rama | Propósito | Deploy automático |
+|---|---|---|
+| `master` | Producción — gabriellattanzi.com | Sí (Vercel, dominio custom) |
+| `develop` | Staging — validar cambios antes de producción | Sí (Vercel Preview URL) |
+| `feature/*` | Una rama por tarea/cambio | No (PR hacia develop) |
+
+**Ciclo de trabajo:**
+```
+feature/mi-cambio → develop (PR + review) → master (PR + review)
+```
+Nunca hacer push directo a `master`.
+
+### Checks locales (antes de hacer push)
+
+```bash
+npm run lint          # ESLint
+npx tsc --noEmit      # TypeScript sin compilar
+npm run build         # Build completo (detecta errores de producción)
+```
+
+El mismo CI corre automáticamente en GitHub Actions al abrir un PR.
+
+### Estructura del código
+
+```
+src/
+├── app/
+│   ├── (site)/          # Páginas públicas (layout.tsx, page.tsx, etc.)
+│   └── api/             # API Routes (ej: formulario de contacto)
+├── components/          # Componentes reutilizables
+├── lib/                 # Utilidades y contenido (content.ts = textos del sitio)
+└── sanity/              # Schemas y configuración de Sanity CMS
+public/                  # Assets estáticos (logo, foto, etc.)
+```
+
+### Deploy
+
+Vercel despliega automáticamente al hacer push:
+- `master` → producción (gabriellattanzi.com)
+- `develop` → preview URL (visible en el PR de GitHub)
+
+Variables de entorno en producción: Vercel → proyecto → Settings → Environment Variables.
