@@ -1,31 +1,11 @@
 "use server";
 
 import { headers } from "next/headers";
-import { z } from "zod";
 import { Resend } from "resend";
 import { getWriteClient } from "@/sanity/lib/write-client";
 import { isRateLimited } from "@/lib/rate-limit";
 import { site } from "@/lib/content";
-
-const contactSchema = z.object({
-  name: z.string().trim().min(2, "Escribe tu nombre completo.").max(120),
-  email: z.string().trim().email("Escribe un correo válido.").max(200),
-  phone: z
-    .string()
-    .trim()
-    .max(40)
-    .regex(/^[0-9+()\-\s]*$/, "Solo números y símbolos de teléfono.")
-    .optional()
-    .or(z.literal("")),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Cuéntame un poco más (mínimo 10 caracteres).")
-    .max(3000),
-  // Campo honeypot: invisible para personas, si llega lleno es un bot.
-  website: z.string().max(0).optional().or(z.literal("")),
-  turnstileToken: z.string().optional(),
-});
+import { contactSchema } from "./contact-schema";
 
 export type ContactState = {
   status: "idle" | "success" | "error";
@@ -33,28 +13,58 @@ export type ContactState = {
   fieldErrors?: Record<string, string>;
 };
 
-async function verifyTurnstile(token: string | undefined, ip: string) {
+async function verifyTurnstile(token: string | undefined, ip: string, hostname: string) {
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) {
-    // Turnstile todavía no está configurado (falta la cuenta de Cloudflare,
-    // ver guía de lanzamiento). No bloqueamos el formulario por esto: el
-    // honeypot + el límite de envíos por IP siguen activos como protección
-    // base. Configurar Turnstile es una mejora a aplicar antes/después del
-    // lanzamiento, no un requisito para que el formulario funcione.
+
+  // En desarrollo: si faltan ambas claves, se omite la verificación.
+  // En producción: si falta cualquiera de las dos claves, se rechaza.
+  if (!siteKey || !secret) {
+    if (process.env.NODE_ENV === "production") {
+      console.error("[turnstile] Claves de Turnstile no configuradas en producción.");
+      return false;
+    }
     return true;
   }
+
   if (!token) return false;
 
-  const response = await fetch(
-    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ secret, response: token, remoteip: ip }),
+  try {
+    const response = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ secret, response: token, remoteip: ip }),
+        signal: AbortSignal.timeout(5000),
+        cache: "no-store",
+      }
+    );
+
+    if (!response.ok) {
+      console.error("[turnstile] Respuesta HTTP no exitosa:", response.status);
+      return false;
     }
-  );
-  const data = (await response.json()) as { success: boolean };
-  return data.success;
+
+    const data = (await response.json()) as { success: boolean; hostname?: string };
+
+    if (!data.success) return false;
+
+    // Verificar que el hostname de Turnstile coincide con el del request (sin puerto)
+    if (data.hostname) {
+      const expectedHost = hostname.split(":")[0];
+      const turnstileHost = data.hostname.split(":")[0];
+      if (expectedHost && turnstileHost && expectedHost !== turnstileHost) {
+        console.error("[turnstile] Hostname mismatch:", expectedHost, "vs", turnstileHost);
+        return false;
+      }
+    }
+
+    return true;
+  } catch (err) {
+    console.error("[turnstile] Error en la verificación:", err);
+    return false;
+  }
 }
 
 export async function submitContactForm(
@@ -62,8 +72,18 @@ export async function submitContactForm(
   formData: FormData
 ): Promise<ContactState> {
   const headerList = await headers();
+
+  // Obtener IP: primero x-real-ip, luego primera entrada de x-forwarded-for
   const ip =
-    headerList.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    headerList.get("x-real-ip") ||
+    headerList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown";
+
+  // Hostname para verificación de Turnstile (sin puerto)
+  const hostname =
+    headerList.get("x-forwarded-host") ||
+    headerList.get("host") ||
+    "";
 
   if (isRateLimited(ip)) {
     return {
@@ -79,6 +99,7 @@ export async function submitContactForm(
     message: formData.get("message") ?? undefined,
     website: formData.get("website") ?? undefined,
     turnstileToken: formData.get("cf-turnstile-response") ?? undefined,
+    consent: formData.get("consent") ?? undefined,
   };
 
   const parsed = contactSchema.safeParse(raw);
@@ -103,7 +124,7 @@ export async function submitContactForm(
     return { status: "success" };
   }
 
-  const isHuman = await verifyTurnstile(parsed.data.turnstileToken, ip);
+  const isHuman = await verifyTurnstile(parsed.data.turnstileToken, ip, hostname);
   if (!isHuman) {
     return {
       status: "error",
@@ -113,6 +134,9 @@ export async function submitContactForm(
 
   const { name, email, phone, message } = parsed.data;
 
+  // Timestamp compartido para receivedAt y consentAt
+  const now = new Date().toISOString();
+
   try {
     await getWriteClient().create({
       _type: "lead",
@@ -120,7 +144,10 @@ export async function submitContactForm(
       email,
       phone: phone || undefined,
       message,
-      receivedAt: new Date().toISOString(),
+      receivedAt: now,
+      consentGiven: true,
+      consentAt: now,
+      privacyPolicyVersion: "2026-08-31",
       status: "nuevo",
     });
   } catch (error) {

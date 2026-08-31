@@ -17,7 +17,7 @@ Ninguna la creó Claude por ustedes — son cuentas personales de Gabriel/Caroli
 | **Vercel** | Alojar el sitio (gratis) | vercel.com |
 | **Sanity** | El panel donde Gabriel escribe el blog, y donde quedan guardados los contactos del formulario (gratis hasta un buen volumen) | sanity.io |
 | **Resend** | Enviar el correo de aviso cuando alguien llena el formulario (gratis hasta 3,000 correos/mes) | resend.com |
-| **Cloudflare Turnstile** | Protección anti-spam del formulario (gratis) | dash.cloudflare.com → Turnstile |
+| **Cloudflare Turnstile** | Protección anti-spam del formulario (gratis). **Obligatorio en producción: ambas claves (`NEXT_PUBLIC_TURNSTILE_SITE_KEY` y `TURNSTILE_SECRET_KEY`) deben configurarse en Vercel antes de publicar** | dash.cloudflare.com → Turnstile |
 | **Calendly** | Ya lo eligieron — la agenda de citas (gratis en plan básico) | calendly.com |
 
 ## 3. Variables de entorno
@@ -77,6 +77,12 @@ Controles ya implementados: HTTPS forzado, cabeceras de seguridad
 (CSP, HSTS, X-Frame-Options, etc.), validación de todos los campos del
 formulario en el servidor, sin datos financieros sensibles en el
 formulario, tokens con permisos mínimos, sin secretos en el código.
+
+⚠️ **Limitación conocida del rate limit:** el contador de solicitudes por IP
+se almacena en memoria del proceso de Node.js. En Vercel (serverless), cada
+instancia fría arranca con sus propios contadores, por lo que el límite solo
+frena abuso dentro de la misma instancia. Si el tráfico crece significativamente,
+migrar a Vercel KV, Upstash Redis u otro contador distribuido.
 
 Pendiente conocido (bajo riesgo): algunas dependencias del panel de Sanity
 (no del sitio público) tienen alertas menores de `npm audit`, heredadas de

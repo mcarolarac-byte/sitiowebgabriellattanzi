@@ -53,10 +53,12 @@ export function ContactForm() {
           type="text"
           required
           autoComplete="name"
+          aria-invalid={!!state.fieldErrors?.name}
+          aria-describedby={state.fieldErrors?.name ? "name-error" : undefined}
           className="focus-ring mt-1.5 w-full rounded-sm border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink"
         />
         {state.fieldErrors?.name && (
-          <p className="mt-1 font-body text-xs text-red-700">
+          <p id="name-error" role="alert" className="mt-1 font-body text-xs text-red-700">
             {state.fieldErrors.name}
           </p>
         )}
@@ -72,10 +74,12 @@ export function ContactForm() {
           type="email"
           required
           autoComplete="email"
+          aria-invalid={!!state.fieldErrors?.email}
+          aria-describedby={state.fieldErrors?.email ? "email-error" : undefined}
           className="focus-ring mt-1.5 w-full rounded-sm border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink"
         />
         {state.fieldErrors?.email && (
-          <p className="mt-1 font-body text-xs text-red-700">
+          <p id="email-error" role="alert" className="mt-1 font-body text-xs text-red-700">
             {state.fieldErrors.email}
           </p>
         )}
@@ -90,10 +94,12 @@ export function ContactForm() {
           name="phone"
           type="tel"
           autoComplete="tel"
+          aria-invalid={!!state.fieldErrors?.phone}
+          aria-describedby={state.fieldErrors?.phone ? "phone-error" : undefined}
           className="focus-ring mt-1.5 w-full rounded-sm border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink"
         />
         {state.fieldErrors?.phone && (
-          <p className="mt-1 font-body text-xs text-red-700">
+          <p id="phone-error" role="alert" className="mt-1 font-body text-xs text-red-700">
             {state.fieldErrors.phone}
           </p>
         )}
@@ -108,10 +114,12 @@ export function ContactForm() {
           name="message"
           required
           rows={5}
+          aria-invalid={!!state.fieldErrors?.message}
+          aria-describedby={state.fieldErrors?.message ? "message-error" : undefined}
           className="focus-ring mt-1.5 w-full rounded-sm border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink"
         />
         {state.fieldErrors?.message && (
-          <p className="mt-1 font-body text-xs text-red-700">
+          <p id="message-error" role="alert" className="mt-1 font-body text-xs text-red-700">
             {state.fieldErrors.message}
           </p>
         )}
@@ -128,22 +136,32 @@ export function ContactForm() {
       )}
 
       {/* GDPR: consentimiento obligatorio para tratamiento de datos */}
-      <div className="flex items-start gap-3">
-        <input
-          id="consent"
-          name="consent"
-          type="checkbox"
-          required
-          className="focus-ring mt-0.5 h-4 w-4 shrink-0 rounded-sm border border-line accent-ink"
-        />
-        <label htmlFor="consent" className="font-body text-xs leading-relaxed text-slate">
-          He leído y acepto la{" "}
-          <a href="/privacidad" className="underline hover:text-ink" target="_blank" rel="noopener noreferrer">
-            Política de Privacidad
-          </a>{" "}
-          y autorizo el tratamiento de mis datos personales para que Gabriel Lattanzi pueda
-          responder a mi consulta. No se usarán para ningún otro fin sin mi consentimiento.
-        </label>
+      <div className="flex flex-col gap-1">
+        <div className="flex items-start gap-3">
+          <input
+            id="consent"
+            name="consent"
+            type="checkbox"
+            value="accepted"
+            required
+            aria-invalid={!!state.fieldErrors?.consent}
+            aria-describedby={state.fieldErrors?.consent ? "consent-error" : undefined}
+            className="focus-ring mt-0.5 h-4 w-4 shrink-0 rounded-sm border border-line accent-ink"
+          />
+          <label htmlFor="consent" className="font-body text-xs leading-relaxed text-slate">
+            He leído y acepto la{" "}
+            <a href="/privacidad" className="underline hover:text-ink" target="_blank" rel="noopener noreferrer">
+              Política de Privacidad
+            </a>{" "}
+            y autorizo el tratamiento de mis datos personales para que Gabriel Lattanzi pueda
+            responder a mi consulta. No se usarán para ningún otro fin sin mi consentimiento.
+          </label>
+        </div>
+        {state.fieldErrors?.consent && (
+          <p id="consent-error" role="alert" className="mt-1 font-body text-xs text-red-700">
+            {state.fieldErrors.consent}
+          </p>
+        )}
       </div>
 
       {state.status === "error" && state.message && (

@@ -19,6 +19,24 @@ export const leadType = defineType({
       readOnly: true,
     }),
     defineField({
+      name: "consentGiven",
+      title: "Consentimiento otorgado",
+      type: "boolean",
+      readOnly: true,
+    }),
+    defineField({
+      name: "consentAt",
+      title: "Fecha de consentimiento",
+      type: "datetime",
+      readOnly: true,
+    }),
+    defineField({
+      name: "privacyPolicyVersion",
+      title: "Versión de la política de privacidad",
+      type: "string",
+      readOnly: true,
+    }),
+    defineField({
       name: "status",
       title: "Estado",
       type: "string",

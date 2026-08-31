@@ -1,0 +1,755 @@
+<title>Entrega del Proyecto — gabriellattanzi.com</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ── Tokens ───────────────────────────────────────── */
+  :root {
+    --bg:        #F7F8FA;
+    --surface:   #FFFFFF;
+    --border:    #E2E5EC;
+    --code-bg:   #EEF0F5;
+    --ink:       #111827;
+    --muted:     #5B6578;
+    --navy:      #1C2B4B;
+    --navy-lt:   #2D4270;
+    --accent:    #2A5BD7;
+    --accent-lt: #EBF0FC;
+    --ok:        #166534;
+    --ok-bg:     #DCFCE7;
+    --warn-bg:   #FEF9C3;
+    --warn:      #713F12;
+
+    --font-head: 'Outfit', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-code: 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #0F1523;
+      --surface:   #1A2235;
+      --border:    #2A3550;
+      --code-bg:   #222D45;
+      --ink:       #E8ECF4;
+      --muted:     #8A96B0;
+      --navy:      #7DA3F5;
+      --navy-lt:   #5B84E8;
+      --accent:    #5B8FF9;
+      --accent-lt: #1A2744;
+      --ok:        #86EFAC;
+      --ok-bg:     #14532D;
+      --warn-bg:   #3B2E05;
+      --warn:      #FDE68A;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg:        #0F1523;
+    --surface:   #1A2235;
+    --border:    #2A3550;
+    --code-bg:   #222D45;
+    --ink:       #E8ECF4;
+    --muted:     #8A96B0;
+    --navy:      #7DA3F5;
+    --navy-lt:   #5B84E8;
+    --accent:    #5B8FF9;
+    --accent-lt: #1A2744;
+    --ok:        #86EFAC;
+    --ok-bg:     #14532D;
+    --warn-bg:   #3B2E05;
+    --warn:      #FDE68A;
+  }
+
+  /* ── Reset ────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--bg);
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+  /* ── Layout ───────────────────────────────────────── */
+  .wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .doc-header {
+    background: var(--navy);
+    color: #fff;
+    padding: 2.5rem 0;
+  }
+
+  .doc-header .wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .gl-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  .doc-header h1 {
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .doc-header .sub {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.65);
+    margin-top: 0.25rem;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 0 4rem;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+  }
+
+  /* ── Sidebar ──────────────────────────────────────── */
+  .sidebar {
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .sidebar-title {
+    font-family: var(--font-head);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .sidebar nav a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.83rem;
+    color: var(--muted);
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .sidebar nav a:hover {
+    background: var(--accent-lt);
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .sidebar nav a .num {
+    font-family: var(--font-code);
+    font-size: 0.72rem;
+    opacity: 0.6;
+  }
+
+  /* ── Content ──────────────────────────────────────── */
+  .content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem 2rem;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: var(--font-code);
+    font-size: 0.72rem;
+    color: var(--muted);
+    background: var(--code-bg);
+    padding: 0.2rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .section-head h2 {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ── Access cards ─────────────────────────────────── */
+  .access-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .access-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.125rem;
+  }
+
+  .access-card .service {
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.4rem;
+  }
+
+  .access-card .what {
+    font-size: 0.88rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .access-card .action {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── Stack table ──────────────────────────────────── */
+  .stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    overflow-x: auto;
+    display: block;
+  }
+
+  .stack-table th {
+    text-align: left;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    padding: 0.5rem 1rem 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stack-table td {
+    padding: 0.65rem 1rem 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--ink);
+  }
+
+  .stack-table tr:last-child td { border-bottom: none; }
+
+  .tag {
+    display: inline-block;
+    font-family: var(--font-code);
+    font-size: 0.78rem;
+    background: var(--code-bg);
+    color: var(--navy);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  /* ── Code blocks ──────────────────────────────────── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .step-n {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 50%;
+    font-family: var(--font-head);
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.1rem;
+  }
+
+  .step-body { flex: 1; min-width: 0; }
+
+  .step-body p {
+    font-size: 0.9rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-body p strong { color: var(--ink); font-weight: 600; }
+
+  pre {
+    background: var(--code-bg);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+    font-family: var(--font-code);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--navy);
+    border: 1px solid var(--border);
+  }
+
+  code {
+    font-family: var(--font-code);
+    font-size: 0.85em;
+    background: var(--code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    color: var(--navy);
+  }
+
+  /* ── Callouts ─────────────────────────────────────── */
+  .callout {
+    border-left: 3px solid;
+    border-radius: 0 6px 6px 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    margin-top: 1rem;
+    line-height: 1.55;
+  }
+
+  .callout.ok {
+    border-color: #22C55E;
+    background: var(--ok-bg);
+    color: var(--ok);
+  }
+
+  .callout.warn {
+    border-color: #EAB308;
+    background: var(--warn-bg);
+    color: var(--warn);
+  }
+
+  .callout strong { font-weight: 600; }
+
+  /* ── Env vars ─────────────────────────────────────── */
+  .env-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .env-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 1rem;
+    align-items: baseline;
+    padding: 0.7rem 1rem;
+    background: var(--code-bg);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  .env-key {
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--navy);
+    white-space: nowrap;
+  }
+
+  .env-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+  }
+
+  /* ── Prose ────────────────────────────────────────── */
+  .prose p {
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose p:last-child { margin-bottom: 0; }
+
+  .prose ul {
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .prose li {
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+</style>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="wrapper">
+    <div class="gl-badge">GL</div>
+    <div>
+      <h1>Entrega del Proyecto</h1>
+      <div class="sub">gabriellattanzi.com · Sitio web de Gabriel Lattanzi · Preparado junio 2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <nav>
+      <a href="#accesos"><span class="num">01</span> Accesos necesarios</a>
+      <a href="#stack"><span class="num">02</span> Stack tecnológico</a>
+      <a href="#local"><span class="num">03</span> Correr en local</a>
+      <a href="#deploy"><span class="num">04</span> Deploy a producción</a>
+      <a href="#blog"><span class="num">05</span> Gestión del blog</a>
+      <a href="#env"><span class="num">06</span> Variables de entorno</a>
+      <a href="#estructura"><span class="num">07</span> Estructura del código</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+
+    <!-- INTRO NOTE -->
+    <div class="callout ok">
+      <strong>Para el desarrollador:</strong> Este documento cubre todo lo que necesitas para tomar el mantenimiento y la evolución de <strong>gabriellattanzi.com</strong>. Es un sitio Next.js conectado a Sanity CMS y desplegado en Vercel. No se requieren conocimientos especiales fuera del stack estándar de React/Next.js.
+    </div>
+
+    <!-- 01 ACCESOS -->
+    <section class="section" id="accesos">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2>Accesos necesarios</h2>
+      </div>
+
+      <div class="access-grid">
+        <div class="access-card">
+          <div class="service">GitHub</div>
+          <div class="what">Repositorio con todo el código fuente del sitio.</div>
+          <div class="action">
+            <a href="https://github.com/mcarolarac-byte/sitiowebgabriellattanzi" target="_blank">github.com/mcarolarac-byte/sitiowebgabriellattanzi</a>
+          </div>
+        </div>
+        <div class="access-card">
+          <div class="service">Vercel</div>
+          <div class="what">Plataforma de deploy. Aquí se gestionan los deploys, dominios y variables de entorno de producción.</div>
+          <div class="action"><a href="https://vercel.com" target="_blank">vercel.com</a> → proyecto <code>pagina-asesor-financiero</code></div>
+        </div>
+        <div class="access-card">
+          <div class="service">Sanity CMS</div>
+          <div class="what">Gestiona el contenido del blog y los leads del formulario de contacto.</div>
+          <div class="action"><a href="https://sanity.io/manage" target="_blank">sanity.io/manage</a> → solicitar acceso al proyecto existente</div>
+        </div>
+        <div class="access-card">
+          <div class="service">Dominio</div>
+          <div class="what"><code>gabriellattanzi.com</code> — registrado en un proveedor externo, DNS apuntando a Vercel.</div>
+          <div class="action">Solicitar credenciales del registrador al cliente (Gabriel Lattanzi)</div>
+        </div>
+      </div>
+
+      <div class="callout warn" style="margin-top:1.25rem">
+        <strong>Importante:</strong> Pide también el archivo <code>.env.local</code> al cliente antes de empezar a trabajar en local. Sin él, el proyecto carga pero el formulario de contacto y el blog no funcionarán. Ver sección 06 para el detalle.
+      </div>
+    </section>
+
+    <!-- 02 STACK -->
+    <section class="section" id="stack">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2>Stack tecnológico</h2>
+      </div>
+
+      <table class="stack-table">
+        <thead>
+          <tr>
+            <th>Capa</th>
+            <th>Tecnología</th>
+            <th>Para qué se usa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Framework</strong></td>
+            <td><span class="tag">Next.js 15</span></td>
+            <td>App Router, TypeScript, SSR/SSG, rutas del sitio</td>
+          </tr>
+          <tr>
+            <td><strong>Estilos</strong></td>
+            <td><span class="tag">Tailwind CSS v4</span></td>
+            <td>CSS variables en <code>globals.css</code> vía <code>@theme inline</code></td>
+          </tr>
+          <tr>
+            <td><strong>CMS</strong></td>
+            <td><span class="tag">Sanity v3</span></td>
+            <td>Blog y leads del formulario. Studio en <code>/studio</code></td>
+          </tr>
+          <tr>
+            <td><strong>Deploy</strong></td>
+            <td><span class="tag">Vercel</span></td>
+            <td>Integración GitHub → push a <code>master</code> = deploy automático</td>
+          </tr>
+          <tr>
+            <td><strong>Fuentes</strong></td>
+            <td><span class="tag">Google Fonts</span></td>
+            <td>Playfair Display (display), IBM Plex Sans (cuerpo), IBM Plex Mono</td>
+          </tr>
+          <tr>
+            <td><strong>Calendario</strong></td>
+            <td><span class="tag">Calendly</span></td>
+            <td>Widget embebido en <code>/contacto</code></td>
+          </tr>
+          <tr>
+            <td><strong>Anti-bot</strong></td>
+            <td><span class="tag">Cloudflare Turnstile</span> <em>(obligatorio en producción)</em></td>
+            <td>Protección del formulario. Obligatorio en producción: ambas claves deben configurarse en Vercel</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 03 LOCAL -->
+    <section class="section" id="local">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2>Correr el proyecto en local</h2>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div class="step-body">
+            <p><strong>Clonar el repositorio</strong></p>
+            <pre>git clone https://github.com/mcarolarac-byte/sitiowebgabriellattanzi.git
+cd sitiowebgabriellattanzi</pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div class="step-body">
+            <p><strong>Instalar dependencias</strong> (requiere Node.js 18+ y npm)</p>
+            <pre>npm install</pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div class="step-body">
+            <p><strong>Crear el archivo de variables de entorno</strong> — copiar las variables que te pase el cliente y pegarlas en un archivo nuevo llamado <code>.env.local</code> en la raíz del proyecto. Ver sección 06 para el detalle de cada variable.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">4</div>
+          <div class="step-body">
+            <p><strong>Iniciar el servidor de desarrollo</strong></p>
+            <pre>npm run dev</pre>
+            <p>El sitio estará disponible en <a href="http://localhost:3000">http://localhost:3000</a><br>
+            El Sanity Studio estará en <a href="http://localhost:3000/studio">http://localhost:3000/studio</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 DEPLOY -->
+    <section class="section" id="deploy">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2>Deploy a producción</h2>
+      </div>
+
+      <div class="prose">
+        <p>El deploy es <strong>completamente automático</strong>. Cada vez que se hace un <code>git push</code> a la rama <code>master</code>, Vercel detecta el cambio, compila el proyecto y lo publica en <strong>gabriellattanzi.com</strong> en aproximadamente 1–2 minutos.</p>
+        <p>Para publicar un cambio:</p>
+      </div>
+
+      <div class="steps" style="margin-top:1rem">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div class="step-body">
+            <pre>git add .
+git commit -m "descripción del cambio"
+git push</pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div class="step-body">
+            <p>Vercel notifica por email cuando el deploy termina. También puedes verlo en tiempo real en <a href="https://vercel.com" target="_blank">vercel.com</a> → el proyecto → pestaña <strong>Deployments</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout ok" style="margin-top:1rem">
+        <strong>Para agregar nuevas variables de entorno a producción:</strong> ve a Vercel → proyecto → <em>Settings → Environment Variables</em>. Los cambios en variables de entorno requieren un redeploy manual (botón <em>Redeploy</em> en el último deployment).
+      </div>
+    </section>
+
+    <!-- 05 BLOG -->
+    <section class="section" id="blog">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2>Gestión del blog (Sanity Studio)</h2>
+      </div>
+
+      <div class="prose">
+        <p>El blog usa <strong>Sanity CMS</strong>. El cliente (Gabriel) puede crear, editar y publicar artículos directamente desde el panel de administración, sin tocar código.</p>
+        <p><strong>Para acceder al panel de administración:</strong></p>
+        <ul>
+          <li>Ir a <a href="https://gabriellattanzi.com/studio" target="_blank">gabriellattanzi.com/studio</a></li>
+          <li>Iniciar sesión con la cuenta de Sanity del cliente</li>
+          <li>Crear un nuevo documento de tipo <em>Post</em>, llenar título, contenido, imagen y publicarlo</li>
+          <li>El artículo aparece automáticamente en <a href="https://gabriellattanzi.com/blog" target="_blank">gabriellattanzi.com/blog</a></li>
+        </ul>
+        <p>Los leads del formulario de contacto también llegan a Sanity, en un tipo de documento llamado <em>Lead</em> o similar. Se pueden ver desde el mismo Studio.</p>
+        <p><strong>Como desarrollador,</strong> el schema de Sanity está en la carpeta <code>sanity/</code> del repositorio. Ahí puedes agregar nuevos tipos de contenido o campos según necesite el cliente.</p>
+      </div>
+    </section>
+
+    <!-- 06 ENV VARS -->
+    <section class="section" id="env">
+      <div class="section-head">
+        <span class="section-num">06</span>
+        <h2>Variables de entorno</h2>
+      </div>
+
+      <div class="prose">
+        <p>Estas variables deben estar en el archivo <code>.env.local</code> para correr en local, y configuradas en Vercel para producción. El cliente debe proporcionarlas.</p>
+      </div>
+
+      <div class="env-list">
+        <div class="env-item">
+          <div class="env-key">NEXT_PUBLIC_SANITY_PROJECT_ID</div>
+          <div class="env-desc">ID del proyecto en Sanity (visible en sanity.io/manage)</div>
+        </div>
+        <div class="env-item">
+          <div class="env-key">NEXT_PUBLIC_SANITY_DATASET</div>
+          <div class="env-desc">Generalmente <code>production</code></div>
+        </div>
+        <div class="env-item">
+          <div class="env-key">SANITY_API_TOKEN</div>
+          <div class="env-desc">Token con permisos de escritura para guardar los leads del formulario. Generarlo en Manage → API → Tokens</div>
+        </div>
+        <div class="env-item">
+          <div class="env-key">NEXT_PUBLIC_TURNSTILE_SITE_KEY</div>
+          <div class="env-desc">Clave pública de Cloudflare Turnstile (anti-bot). <strong>Obligatoria en producción</strong> — si falta esta clave o TURNSTILE_SECRET_KEY, el formulario rechazará todos los envíos en producción</div>
+        </div>
+        <div class="env-item">
+          <div class="env-key">TURNSTILE_SECRET_KEY</div>
+          <div class="env-desc">Clave secreta de Cloudflare Turnstile. Solo en servidor, nunca expuesta al cliente</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 ESTRUCTURA -->
+    <section class="section" id="estructura">
+      <div class="section-head">
+        <span class="section-num">07</span>
+        <h2>Estructura del código</h2>
+      </div>
+
+      <pre>src/
+├── app/
+│   ├── (site)/           ← Todas las páginas públicas del sitio
+│   │   ├── page.tsx      ← Página de inicio (portada + hero)
+│   │   ├── contacto/     ← Formulario de contacto + Calendly
+│   │   ├── que-hago/     ← Servicios
+│   │   ├── quien-soy/    ← Trayectoria de Gabriel
+│   │   ├── blog/         ← Listado e individual de posts
+│   │   └── privacidad/   ← Política de privacidad (GDPR)
+│   └── studio/           ← Sanity Studio (panel de administración)
+│
+├── components/
+│   ├── Header.tsx        ← Navegación + logo + selector de idioma
+│   ├── Footer.tsx        ← Pie de página + disclaimers + LinkedIn
+│   ├── LanguageSwitcher.tsx ← Botón ES/EN con banderas SVG
+│   ├── Container.tsx     ← Wrapper de ancho máximo
+│   └── Horizon.tsx       ← Elemento decorativo SVG
+│
+├── contexts/
+│   └── LanguageContext.tsx ← Contexto React para ES/EN (localStorage)
+│
+├── lib/
+│   ├── content.ts        ← Textos y datos en español (idioma base)
+│   ├── content.en.ts     ← Traducción completa al inglés
+│   └── i18n.ts           ← Hook useContent() — devuelve ES o EN según idioma
+│
+public/
+├── flags/
+│   ├── es.svg            ← Bandera España
+│   └── gb.svg            ← Bandera Reino Unido
+└── logo-gl.png           ← Logo del cliente (monograma GL)
+
+sanity/
+└── schemas/              ← Schemas del CMS (tipos de contenido)</pre>
+
+      <div class="callout ok" style="margin-top:1.25rem">
+        <strong>Textos en español:</strong> editar <code>src/lib/content.ts</code>. <strong>Textos en inglés:</strong> editar <code>src/lib/content.en.ts</code>. El hook <code>useContent()</code> en <code>i18n.ts</code> devuelve automáticamente el objeto correcto según el idioma activo. La preferencia del usuario se guarda en <code>localStorage</code> con la clave <code>gl-lang</code>.
+      </div>
+    </section>
+
+  </main>
+</div>
