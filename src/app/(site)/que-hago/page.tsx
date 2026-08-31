@@ -1,28 +1,42 @@
-import type { Metadata } from "next";
+'use client';
+
 import Link from "next/link";
 import { Container } from "@/components/Container";
-import { complianceNote, services, site } from "@/lib/content";
-
-export const metadata: Metadata = {
-  title: "Qué hago",
-  description: `Servicios de acompañamiento y educación financiera de ${site.name}.`,
-};
+import { useContent } from "@/lib/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function QueHago() {
+  const { services, complianceNote } = useContent();
+  const { lang } = useLanguage();
+
+  const t = lang === 'en'
+    ? {
+        eyebrow: 'What I Do',
+        headline: 'Clear guidance, without unnecessary jargon',
+        intro: "I work with people who want to understand their money and make better long-term decisions — not with those looking for someone to manage their wealth for them.",
+        ctaHeadline: 'The first step is a conversation, at no cost',
+        ctaButton: 'Schedule a call',
+      }
+    : {
+        eyebrow: 'Qu\u00e9 hago',
+        headline: 'Acompa\u00f1amiento claro, sin tecnicismos innecesarios',
+        intro: "Trabajo con personas que quieren entender su dinero y tomar mejores decisiones de largo plazo \u2014 no con quienes buscan que alguien m\u00e1s administre su patrimonio.",
+        ctaHeadline: 'El primer paso es una conversaci\u00f3n, sin costo',
+        ctaButton: 'Agenda una llamada',
+      };
+
   return (
     <>
       <section className="border-b border-line">
         <Container className="py-20">
           <p className="font-data text-xs uppercase tracking-[0.2em] text-brass">
-            Qué hago
+            {t.eyebrow}
           </p>
           <h1 className="mt-3 max-w-2xl font-display text-4xl font-semibold text-ink">
-            Acompañamiento claro, sin tecnicismos innecesarios
+            {t.headline}
           </h1>
           <p className="mt-6 max-w-2xl font-body text-lg leading-relaxed text-slate-soft">
-            Trabajo con personas que quieren entender su dinero y tomar
-            mejores decisiones de largo plazo — no con quienes buscan que
-            alguien más administre su patrimonio.
+            {t.intro}
           </p>
         </Container>
       </section>
@@ -63,13 +77,13 @@ export default function QueHago() {
       <section>
         <Container className="flex flex-col items-start gap-6 py-16 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="max-w-lg font-display text-2xl font-semibold text-ink">
-            El primer paso es una conversación, sin costo
+            {t.ctaHeadline}
           </h2>
           <Link
             href="/contacto#agenda"
             className="focus-ring shrink-0 rounded-sm bg-ink px-6 py-3 font-body text-sm font-medium text-paper transition-colors hover:bg-ink-soft"
           >
-            Agenda una llamada
+            {t.ctaButton}
           </Link>
         </Container>
       </section>

@@ -1,8 +1,16 @@
+'use client';
+
 import Link from "next/link";
 import { Container } from "./Container";
-import { complianceNote, disclaimers, site } from "@/lib/content";
+import { useContent } from "@/lib/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Footer() {
+  const { complianceNote, disclaimers, site } = useContent();
+  const { lang } = useLanguage();
+
+  const privacyLabel = lang === 'en' ? 'Privacy Notice' : 'Aviso de privacidad';
+
   return (
     <footer className="border-t border-line bg-ink text-paper">
       <Container className="flex flex-col gap-8 py-14">
@@ -30,7 +38,7 @@ export function Footer() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-2xl leading-relaxed">{complianceNote}</p>
             <Link href="/privacidad" className="focus-ring shrink-0 rounded underline">
-              Aviso de privacidad
+              {privacyLabel}
             </Link>
           </div>
           <ul className="flex flex-col gap-2 border-t border-paper/10 pt-4">

@@ -1,3 +1,4 @@
+import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 // Cabeceras de seguridad (OWASP A05 - Security Misconfiguration). El CSP
@@ -33,7 +34,7 @@ const securityHeaders = [
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' https://cdn.sanity.io data:",
             "font-src 'self'",
-            "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io",
+            "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io",
             "frame-src https://calendly.com https://challenges.cloudflare.com",
             "frame-ancestors 'self'",
             "base-uri 'self'",
@@ -61,4 +62,11 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  // Silencia el output de Sentry durante el build
+  silent: !process.env.CI,
+  // Oculta los source maps del bundle público (los sube a Sentry cifrados)
+  sourcemaps: { deleteSourcemapsAfterUpload: true },
+  // Desactiva logs internos de Sentry en runtime
+  disableLogger: true,
+});

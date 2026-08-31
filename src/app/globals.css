@@ -26,7 +26,7 @@
   --color-slate: var(--color-slate);
   --color-slate-soft: var(--color-slate-soft);
   --color-line: var(--color-line);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-playfair);
   --font-body: var(--font-plex-sans);
   --font-data: var(--font-plex-mono);
 }
