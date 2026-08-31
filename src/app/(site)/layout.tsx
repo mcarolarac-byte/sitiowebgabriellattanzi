@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { site } from "@/lib/content";
 import { CookieBanner } from "@/components/CookieBanner";
+import type { ReactNode } from "react";
 import Script from "next/script";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="es"
