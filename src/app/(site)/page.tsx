@@ -94,9 +94,6 @@ export default function Home() {
                 />
               </div>
             </div>
-            <p className="mt-4 font-body text-sm text-slate-soft">
-              {site.name} · {site.location}
-            </p>
           </div>
         </Container>
       </section>
