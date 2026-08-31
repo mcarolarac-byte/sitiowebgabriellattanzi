@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { site } from "@/lib/content";
 import { CookieBanner } from "@/components/CookieBanner";
+import Script from "next/script";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const playfairDisplay = Playfair_Display({
@@ -65,6 +66,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Footer />
           <CookieBanner />
         </LanguageProvider>
+        {/* Google Analytics 4 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-M8NTH8EKND"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-M8NTH8EKND');`}
+        </Script>
       </body>
     </html>
   );
