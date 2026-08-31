@@ -8,7 +8,7 @@ export const site = {
   contactEmail: "contacto@gabriellattanzi.com",
   location: "Barcelona, España — atención online para todo el mundo",
   linkedin: "https://www.linkedin.com/in/gabriellattanzi/",
-  calendlyUrl: "https://calendly.com/plattanzi2014/30min",
+  calendlyUrl: "https://calendly.com/plattanzi2014",
 };
 
 export const hero = {
