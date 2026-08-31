@@ -99,10 +99,12 @@ export function ContactForm() {
           type="text"
           required
           autoComplete="name"
+          aria-invalid={!!state.fieldErrors?.name}
+          aria-describedby={state.fieldErrors?.name ? "name-error" : undefined}
           className="focus-ring mt-1.5 w-full rounded-sm border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink"
         />
         {state.fieldErrors?.name && (
-          <p className="mt-1 font-body text-xs text-red-700">
+          <p id="name-error" role="alert" className="mt-1 font-body text-xs text-red-700">
             {state.fieldErrors.name}
           </p>
         )}
@@ -118,10 +120,12 @@ export function ContactForm() {
           type="email"
           required
           autoComplete="email"
+          aria-invalid={!!state.fieldErrors?.email}
+          aria-describedby={state.fieldErrors?.email ? "email-error" : undefined}
           className="focus-ring mt-1.5 w-full rounded-sm border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink"
         />
         {state.fieldErrors?.email && (
-          <p className="mt-1 font-body text-xs text-red-700">
+          <p id="email-error" role="alert" className="mt-1 font-body text-xs text-red-700">
             {state.fieldErrors.email}
           </p>
         )}
@@ -136,10 +140,12 @@ export function ContactForm() {
           name="phone"
           type="tel"
           autoComplete="tel"
+          aria-invalid={!!state.fieldErrors?.phone}
+          aria-describedby={state.fieldErrors?.phone ? "phone-error" : undefined}
           className="focus-ring mt-1.5 w-full rounded-sm border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink"
         />
         {state.fieldErrors?.phone && (
-          <p className="mt-1 font-body text-xs text-red-700">
+          <p id="phone-error" role="alert" className="mt-1 font-body text-xs text-red-700">
             {state.fieldErrors.phone}
           </p>
         )}
@@ -154,10 +160,12 @@ export function ContactForm() {
           name="message"
           required
           rows={5}
+          aria-invalid={!!state.fieldErrors?.message}
+          aria-describedby={state.fieldErrors?.message ? "message-error" : undefined}
           className="focus-ring mt-1.5 w-full rounded-sm border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink"
         />
         {state.fieldErrors?.message && (
-          <p className="mt-1 font-body text-xs text-red-700">
+          <p id="message-error" role="alert" className="mt-1 font-body text-xs text-red-700">
             {state.fieldErrors.message}
           </p>
         )}
