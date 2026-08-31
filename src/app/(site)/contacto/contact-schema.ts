@@ -18,6 +18,9 @@ export const contactSchema = z.object({
   // Campo honeypot: invisible para personas, si llega lleno es un bot.
   website: z.string().max(0).optional().or(z.literal("")),
   turnstileToken: z.string().optional(),
+  consent: z.literal("accepted", {
+    error: "Debes aceptar la Política de Privacidad.",
+  }),
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;

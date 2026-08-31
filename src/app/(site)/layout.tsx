@@ -4,9 +4,7 @@ import "../globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { site } from "@/lib/content";
-import { CookieBanner } from "@/components/CookieBanner";
 import type { ReactNode } from "react";
-import Script from "next/script";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const playfairDisplay = Playfair_Display({
@@ -30,15 +28,15 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.baseUrl),
   title: {
-    default: `${site.name} \u2014 ${site.tagline}`,
-    template: `%s \u2014 ${site.name}`,
+    default: `${site.name} — ${site.tagline}`,
+    template: `%s — ${site.name}`,
   },
   description:
-    "Acompa\u00f1amiento y educaci\u00f3n financiera para planear tu retiro y entender tus inversiones, con m\u00e1s de 11 a\u00f1os de experiencia analizando mercados globales.",
+    "Acompañamiento y educación financiera para planear tu retiro y entender tus inversiones, con más de 11 años de experiencia analizando mercados globales.",
   openGraph: {
-    title: `${site.name} \u2014 ${site.tagline}`,
+    title: `${site.name} — ${site.tagline}`,
     description:
-      "Acompa\u00f1amiento y educaci\u00f3n financiera para planear tu retiro y entender tus inversiones.",
+      "Acompañamiento y educación financiera para planear tu retiro y entender tus inversiones.",
     url: site.baseUrl,
     siteName: site.name,
     locale: "es_ES",
@@ -65,19 +63,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </main>
           <Footer />
-          <CookieBanner />
         </LanguageProvider>
-        {/* Google Analytics 4 */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-M8NTH8EKND"
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-M8NTH8EKND');`}
-        </Script>
       </body>
     </html>
   );

@@ -35,7 +35,7 @@ const securityHeaders = [
             "img-src 'self' https://cdn.sanity.io data:",
             "font-src 'self'",
             "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io",
-            "frame-src https://calendly.com https://challenges.cloudflare.com",
+            "frame-src https://challenges.cloudflare.com",
             "frame-ancestors 'self'",
             "base-uri 'self'",
             "form-action 'self'",
@@ -67,6 +67,8 @@ export default withSentryConfig(nextConfig, {
   silent: !process.env.CI,
   // Oculta los source maps del bundle público (los sube a Sentry cifrados)
   sourcemaps: { deleteSourcemapsAfterUpload: true },
-  // Desactiva logs internos de Sentry en runtime
-  disableLogger: true,
+  // Reduce el bundle de Sentry eliminando logs de depuración
+  webpack: {
+    treeshake: { removeDebugLogging: true },
+  },
 });

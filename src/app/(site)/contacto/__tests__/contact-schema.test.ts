@@ -6,6 +6,7 @@ const validData = {
   phone: "+34 600 000 000",
   message: "Me gustaría recibir más información sobre sus servicios.",
   website: "",
+  consent: "accepted",
 };
 
 describe("contactSchema — validación del formulario de contacto", () => {
@@ -97,6 +98,29 @@ describe("contactSchema — validación del formulario de contacto", () => {
     it("rechaza website con contenido (bot detectado)", () => {
       const result = contactSchema.safeParse({ ...validData, website: "http://spam.com" });
       expect(result.success).toBe(false);
+    });
+  });
+
+  describe("consentimiento (GDPR)", () => {
+    it("acepta consent='accepted'", () => {
+      expect(contactSchema.safeParse(validData).success).toBe(true);
+    });
+
+    it("rechaza formulario sin consentimiento (consent ausente)", () => {
+      const { consent, ...rest } = validData;
+      const result = contactSchema.safeParse(rest);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe("Debes aceptar la Política de Privacidad.");
+      }
+    });
+
+    it("rechaza consent con valor incorrecto", () => {
+      const result = contactSchema.safeParse({ ...validData, consent: "on" });
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe("Debes aceptar la Política de Privacidad.");
+      }
     });
   });
 });

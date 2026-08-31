@@ -2,17 +2,12 @@
  * Tests del componente ContactForm.
  * Se mockean las dependencias externas para aislar el componente:
  * - useActionState (React 19) → controla el estado del formulario
- * - useLanguage → simula el contexto de idioma
  * - next/script → evita carga de scripts externos en tests
  */
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { ContactForm } from "../ContactForm";
-
-// Mock del contexto de idioma
-jest.mock("@/contexts/LanguageContext", () => ({
-  useLanguage: jest.fn(() => ({ lang: "es" })),
-}));
+import { submitContactForm } from "../actions";
 
 // Mock de next/script (carga el script de Turnstile en prod)
 jest.mock("next/script", () => ({
@@ -25,6 +20,9 @@ jest.mock("../actions", () => ({
   submitContactForm: jest.fn(),
 }));
 
+// Tipado para jest.mocked
+const mockedSubmitContactForm = jest.mocked(submitContactForm);
+
 // Mock de useActionState para controlar el estado del form
 const mockUseActionState = jest.fn();
 jest.mock("react", () => ({
@@ -32,20 +30,14 @@ jest.mock("react", () => ({
   useActionState: (...args: unknown[]) => mockUseActionState(...args),
 }));
 
-const { useLanguage } = require("@/contexts/LanguageContext");
-
 describe("ContactForm", () => {
   beforeEach(() => {
     // Estado por defecto: idle, no pending
     mockUseActionState.mockReturnValue([{ status: "idle" }, jest.fn(), false]);
   });
 
-  describe("renderizado en español", () => {
-    beforeEach(() => {
-      useLanguage.mockReturnValue({ lang: "es" });
-    });
-
-    it("muestra los labels en español", () => {
+  describe("renderizado por defecto", () => {
+    it("muestra los campos del formulario", () => {
       render(<ContactForm />);
       expect(screen.getByLabelText(/Nombre/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Correo/i)).toBeInTheDocument();
@@ -53,51 +45,36 @@ describe("ContactForm", () => {
       expect(screen.getByLabelText(/Mensaje/i)).toBeInTheDocument();
     });
 
-    it("muestra el botón de envío en español", () => {
+    it("muestra el botón de envío", () => {
       render(<ContactForm />);
       expect(screen.getByRole("button", { name: /Enviar mensaje/i })).toBeInTheDocument();
     });
-  });
 
-  describe("renderizado en inglés", () => {
-    beforeEach(() => {
-      useLanguage.mockReturnValue({ lang: "en" });
+    it("muestra la casilla de consentimiento con value='accepted'", () => {
+      render(<ContactForm />);
+      const checkbox = screen.getByRole("checkbox");
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox).toHaveAttribute("value", "accepted");
+      expect(checkbox).toHaveAttribute("name", "consent");
     });
 
-    it("muestra los labels en inglés", () => {
+    it("muestra el enlace a la Política de Privacidad en el consentimiento", () => {
       render(<ContactForm />);
-      expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/Phone/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/Message/i)).toBeInTheDocument();
-    });
-
-    it("muestra el botón de envío en inglés", () => {
-      render(<ContactForm />);
-      expect(screen.getByRole("button", { name: /Send message/i })).toBeInTheDocument();
+      expect(screen.getByText(/Política de Privacidad/i)).toBeInTheDocument();
     });
   });
 
   describe("estado de éxito", () => {
-    it("muestra el mensaje de gracias en español cuando el envío es exitoso", () => {
-      useLanguage.mockReturnValue({ lang: "es" });
+    it("muestra el mensaje de gracias cuando el envío es exitoso", () => {
       mockUseActionState.mockReturnValue([{ status: "success" }, jest.fn(), false]);
       render(<ContactForm />);
       expect(screen.getByText(/¡Gracias por escribir!/i)).toBeInTheDocument();
       expect(screen.queryByRole("button")).not.toBeInTheDocument();
     });
-
-    it("muestra el mensaje de gracias en inglés cuando el envío es exitoso", () => {
-      useLanguage.mockReturnValue({ lang: "en" });
-      mockUseActionState.mockReturnValue([{ status: "success" }, jest.fn(), false]);
-      render(<ContactForm />);
-      expect(screen.getByText(/Thank you for writing/i)).toBeInTheDocument();
-    });
   });
 
   describe("estado de envío", () => {
     it("deshabilita el botón mientras se envía el formulario", () => {
-      useLanguage.mockReturnValue({ lang: "es" });
       mockUseActionState.mockReturnValue([{ status: "idle" }, jest.fn(), true]); // pending = true
       render(<ContactForm />);
       const button = screen.getByRole("button");
@@ -108,7 +85,6 @@ describe("ContactForm", () => {
 
   describe("errores de campo", () => {
     it("muestra el error de nombre cuando hay un error de validación", () => {
-      useLanguage.mockReturnValue({ lang: "es" });
       mockUseActionState.mockReturnValue([
         { status: "error", fieldErrors: { name: "Escribe tu nombre completo." } },
         jest.fn(),
@@ -119,7 +95,6 @@ describe("ContactForm", () => {
     });
 
     it("muestra el mensaje de error general", () => {
-      useLanguage.mockReturnValue({ lang: "es" });
       mockUseActionState.mockReturnValue([
         { status: "error", message: "Revisa los datos del formulario." },
         jest.fn(),
@@ -128,5 +103,22 @@ describe("ContactForm", () => {
       render(<ContactForm />);
       expect(screen.getByRole("alert")).toHaveTextContent("Revisa los datos del formulario.");
     });
+
+    it("muestra error de consentimiento con id consent-error y role=alert", () => {
+      mockUseActionState.mockReturnValue([
+        { status: "error", fieldErrors: { consent: "Debes aceptar la Política de Privacidad." } },
+        jest.fn(),
+        false,
+      ]);
+      render(<ContactForm />);
+      const errorEl = screen.getByText("Debes aceptar la Política de Privacidad.");
+      expect(errorEl).toBeInTheDocument();
+      expect(errorEl).toHaveAttribute("id", "consent-error");
+      expect(errorEl).toHaveAttribute("role", "alert");
+    });
+  });
+
+  afterEach(() => {
+    mockedSubmitContactForm.mockClear();
   });
 });

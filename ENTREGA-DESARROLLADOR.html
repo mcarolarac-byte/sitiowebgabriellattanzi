@@ -566,8 +566,8 @@
           </tr>
           <tr>
             <td><strong>Anti-bot</strong></td>
-            <td><span class="tag">Cloudflare Turnstile</span> <em>(opcional)</em></td>
-            <td>Protección del formulario. Activado si existe <code>NEXT_PUBLIC_TURNSTILE_SITE_KEY</code></td>
+            <td><span class="tag">Cloudflare Turnstile</span> <em>(obligatorio en producción)</em></td>
+            <td>Protección del formulario. Obligatorio en producción: ambas claves deben configurarse en Vercel</td>
           </tr>
         </tbody>
       </table>
@@ -695,7 +695,7 @@ git push</pre>
         </div>
         <div class="env-item">
           <div class="env-key">NEXT_PUBLIC_TURNSTILE_SITE_KEY</div>
-          <div class="env-desc">Clave pública de Cloudflare Turnstile (anti-bot). Opcional — si no existe, el formulario funciona sin el widget</div>
+          <div class="env-desc">Clave pública de Cloudflare Turnstile (anti-bot). <strong>Obligatoria en producción</strong> — si falta esta clave o TURNSTILE_SECRET_KEY, el formulario rechazará todos los envíos en producción</div>
         </div>
         <div class="env-item">
           <div class="env-key">TURNSTILE_SECRET_KEY</div>
@@ -726,7 +726,6 @@ git push</pre>
 │   ├── Header.tsx        ← Navegación + logo + selector de idioma
 │   ├── Footer.tsx        ← Pie de página + disclaimers + LinkedIn
 │   ├── LanguageSwitcher.tsx ← Botón ES/EN con banderas SVG
-│   ├── CookieBanner.tsx  ← Banner GDPR de cookies
 │   ├── Container.tsx     ← Wrapper de ancho máximo
 │   └── Horizon.tsx       ← Elemento decorativo SVG
 │
