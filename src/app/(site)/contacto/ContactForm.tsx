@@ -3,17 +3,63 @@
 import { useActionState, useEffect, useRef } from "react";
 import Script from "next/script";
 import { submitContactForm, type ContactState } from "./actions";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const initialState: ContactState = { status: "idle" };
 
 const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 export function ContactForm() {
+  const { lang } = useLanguage();
   const [state, formAction, pending] = useActionState(
     submitContactForm,
     initialState
   );
   const formRef = useRef<HTMLFormElement>(null);
+
+  const t = lang === 'en'
+    ? {
+        successTitle: 'Thank you for writing!',
+        successMsg: 'I received your message and will get back to you as soon as possible.',
+        name: 'Name',
+        email: 'Email',
+        phone: 'Phone',
+        phoneOptional: '(optional)',
+        message: 'Message',
+        consent: (
+          <>
+            I have read and accept the{' '}
+            <a href="/privacidad" className="underline hover:text-ink" target="_blank" rel="noopener noreferrer">
+              Privacy Policy
+            </a>{' '}
+            and authorize the processing of my personal data so that Gabriel Lattanzi can
+            reply to my inquiry. They will not be used for any other purpose without my consent.
+          </>
+        ),
+        sending: 'Sending…',
+        submit: 'Send message',
+      }
+    : {
+        successTitle: '¡Gracias por escribir!',
+        successMsg: 'Recibí tu mensaje y te voy a responder lo antes posible.',
+        name: 'Nombre',
+        email: 'Correo',
+        phone: 'Teléfono',
+        phoneOptional: '(opcional)',
+        message: 'Mensaje',
+        consent: (
+          <>
+            He leído y acepto la{' '}
+            <a href="/privacidad" className="underline hover:text-ink" target="_blank" rel="noopener noreferrer">
+              Política de Privacidad
+            </a>{' '}
+            y autorizo el tratamiento de mis datos personales para que Gabriel Lattanzi pueda
+            responder a mi consulta. No se usarán para ningún otro fin sin mi consentimiento.
+          </>
+        ),
+        sending: 'Enviando…',
+        submit: 'Enviar mensaje',
+      };
 
   useEffect(() => {
     if (state.status === "success") {
@@ -25,10 +71,10 @@ export function ContactForm() {
     return (
       <div className="rounded-sm border border-line bg-paper-dim p-8">
         <p className="font-display text-xl font-semibold text-ink">
-          ¡Gracias por escribir!
+          {t.successTitle}
         </p>
         <p className="mt-2 font-body text-sm text-slate-soft">
-          Recibí tu mensaje y te voy a responder lo antes posible.
+          {t.successMsg}
         </p>
       </div>
     );
@@ -45,7 +91,7 @@ export function ContactForm() {
       )}
       <div>
         <label htmlFor="name" className="font-body text-sm font-medium text-ink">
-          Nombre
+          {t.name}
         </label>
         <input
           id="name"
@@ -64,7 +110,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="email" className="font-body text-sm font-medium text-ink">
-          Correo
+          {t.email}
         </label>
         <input
           id="email"
@@ -83,7 +129,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="phone" className="font-body text-sm font-medium text-ink">
-          Teléfono <span className="text-slate-soft">(opcional)</span>
+          {t.phone} <span className="text-slate-soft">{t.phoneOptional}</span>
         </label>
         <input
           id="phone"
@@ -101,7 +147,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="message" className="font-body text-sm font-medium text-ink">
-          Mensaje
+          {t.message}
         </label>
         <textarea
           id="message"
@@ -127,7 +173,7 @@ export function ContactForm() {
         <div className="cf-turnstile" data-sitekey={turnstileSiteKey} />
       )}
 
-      {/* GDPR: consentimiento obligatorio para tratamiento de datos */}
+      {/* GDPR consent */}
       <div className="flex items-start gap-3">
         <input
           id="consent"
@@ -137,12 +183,7 @@ export function ContactForm() {
           className="focus-ring mt-0.5 h-4 w-4 shrink-0 rounded-sm border border-line accent-ink"
         />
         <label htmlFor="consent" className="font-body text-xs leading-relaxed text-slate">
-          He leído y acepto la{" "}
-          <a href="/privacidad" className="underline hover:text-ink" target="_blank" rel="noopener noreferrer">
-            Política de Privacidad
-          </a>{" "}
-          y autorizo el tratamiento de mis datos personales para que Gabriel Lattanzi pueda
-          responder a mi consulta. No se usarán para ningún otro fin sin mi consentimiento.
+          {t.consent}
         </label>
       </div>
 
@@ -157,7 +198,7 @@ export function ContactForm() {
         disabled={pending}
         className="focus-ring rounded-sm bg-ink px-6 py-3 font-body text-sm font-medium text-paper transition-colors hover:bg-ink-soft disabled:opacity-60"
       >
-        {pending ? "Enviando…" : "Enviar mensaje"}
+        {pending ? t.sending : t.submit}
       </button>
     </form>
   );
