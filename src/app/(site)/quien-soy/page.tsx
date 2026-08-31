@@ -1,15 +1,36 @@
-import type { Metadata } from "next";
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/Container";
-import { bio, site } from "@/lib/content";
-
-export const metadata: Metadata = {
-  title: "Quién soy",
-  description: `Trayectoria y formación de ${site.name}, estratega financiero.`,
-};
+import { site } from "@/lib/content";
+import { useContent } from "@/lib/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function QuienSoy() {
+  const { bio } = useContent();
+  const { lang } = useLanguage();
+
+  const t = lang === 'en'
+    ? {
+        eyebrow: 'Who I Am',
+        howIWork: 'How I Work',
+        timeline: 'Career Timeline',
+        education: 'Education & Certifications',
+        languages: 'Languages',
+        cta: "Want to talk about your financial situation?",
+        ctaButton: 'Schedule a call',
+      }
+    : {
+        eyebrow: 'Qui\u00e9n soy',
+        howIWork: 'Mi forma de trabajar',
+        timeline: 'Trayectoria',
+        education: 'Formaci\u00f3n y certificaciones',
+        languages: 'Idiomas',
+        cta: '\u00bfHablamos de tu situaci\u00f3n financiera?',
+        ctaButton: 'Agenda una llamada',
+      };
+
   return (
     <>
       <section className="border-b border-line">
@@ -31,7 +52,7 @@ export default function QuienSoy() {
           </div>
           <div>
             <p className="font-data text-xs uppercase tracking-[0.2em] text-brass">
-              Quién soy
+              {t.eyebrow}
             </p>
             <h1 className="mt-3 font-display text-4xl font-semibold text-ink">
               {site.name}
@@ -49,7 +70,7 @@ export default function QuienSoy() {
       <section className="border-b border-line bg-paper-dim">
         <Container className="py-16">
           <h2 className="font-display text-2xl font-semibold text-ink">
-            Mi forma de trabajar
+            {t.howIWork}
           </h2>
           <p className="mt-4 max-w-2xl font-body leading-relaxed text-slate-soft">
             {bio.philosophy}
@@ -60,7 +81,7 @@ export default function QuienSoy() {
       <section className="border-b border-line">
         <Container className="py-16">
           <h2 className="font-display text-2xl font-semibold text-ink">
-            Trayectoria
+            {t.timeline}
           </h2>
           <ol className="mt-8 flex flex-col gap-8 border-l border-line pl-8">
             {bio.timeline.map((item) => (
@@ -86,7 +107,7 @@ export default function QuienSoy() {
         <Container className="grid gap-12 py-16 sm:grid-cols-2">
           <div>
             <h2 className="font-display text-2xl font-semibold text-ink">
-              Formación y certificaciones
+              {t.education}
             </h2>
             <ul className="mt-6 flex flex-col gap-5">
               {bio.credentials.map((credential) => (
@@ -103,12 +124,12 @@ export default function QuienSoy() {
           </div>
           <div>
             <h2 className="font-display text-2xl font-semibold text-ink">
-              Idiomas
+              {t.languages}
             </h2>
             <ul className="mt-6 flex flex-col gap-2">
-              {bio.languages.map((lang) => (
-                <li key={lang} className="font-body text-sm text-slate-soft">
-                  {lang}
+              {bio.languages.map((l) => (
+                <li key={l} className="font-body text-sm text-slate-soft">
+                  {l}
                 </li>
               ))}
             </ul>
@@ -119,13 +140,13 @@ export default function QuienSoy() {
       <section>
         <Container className="flex flex-col items-start gap-6 py-16 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="max-w-lg font-display text-2xl font-semibold text-ink">
-            ¿Hablamos de tu situación financiera?
+            {t.cta}
           </h2>
           <Link
             href="/contacto#agenda"
             className="focus-ring shrink-0 rounded-sm bg-ink px-6 py-3 font-body text-sm font-medium text-paper transition-colors hover:bg-ink-soft"
           >
-            Agenda una llamada
+            {t.ctaButton}
           </Link>
         </Container>
       </section>

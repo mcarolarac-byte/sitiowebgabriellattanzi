@@ -1,7 +1,6 @@
 // Traducciones en inglés — misma estructura que content.ts
-// Solo se exportan los campos que difieren del español.
 
-import { site as siteEs, bio as bioEs } from './content';
+import { site as siteEs } from './content';
 
 export const site = {
   ...siteEs,
@@ -25,7 +24,7 @@ export const hero = {
 export const trustPoints = [
   { value: '+11', label: 'years of experience' },
   { value: 'LATAM', label: 'international background' },
-  { value: 'EMBA', label: 'Executive MBA · IESA' },
+  { value: 'EMBA', label: 'Executive MBA \u00b7 IESA' },
   { value: 'MiFID II', label: 'financial training' },
 ];
 
@@ -51,16 +50,50 @@ export const services = [
 ];
 
 export const bio = {
-  ...bioEs,
   introShort:
     "I'm a financial strategist and, first and foremost, someone who learned by managing their own wealth — with the wins and the lessons that come with it. Since 2015 I've dedicated my career to deeply understanding global markets: fixed income, equities, and investment strategies, always with the same analytical rigor I developed in management roles at multinational corporations.",
+  intro:
+    "I'm a financial strategist and, first and foremost, someone who learned by managing their own wealth — with the wins and the lessons that come with it. Since 2015 I've dedicated my career to deeply understanding global markets: fixed income, equities, and investment strategies, always with the same analytical rigor I developed in management roles at multinational corporations.",
+  corporate:
+    "Before dedicating myself fully to markets, I spent over a decade in management positions at Bayer and Schering, leading business analysis, marketing, and financial control in Venezuela, and regional projects in Mexico. That corporate perspective — of budgets, projections, and data-driven decisions — is the same one I apply today when working with people on their finances.",
+  philosophy:
+    "I don't sell financial products or manage anyone else's money beyond my own. What I offer is guidance: I help you understand your options, build a clear-headed retirement plan, and develop the judgment to make better financial decisions — using the coaching and behavioral finance tools that are also part of my training.",
   credentials: [
-    { title: 'MiFID II Financial Advisory', org: 'Centro de Estudios Financieros (CEF), Spain — 2026 (150h)' },
-    { title: 'Executive MBA', org: 'IESA, Caracas — 2013\u20132014' },
-    { title: 'BS in Administrative Sciences (Management)', org: 'Universidad Metropolitana (UNIMET) — 1984\u20131989' },
-    { title: 'Trading Certifications', org: 'Advanced, Basic and Crypto — 2023\u20132024' },
+    { title: 'MiFID II Financial Advisory', org: 'Centro de Estudios Financieros (CEF), Spain \u2014 2026 (150h)' },
+    { title: 'Executive MBA', org: 'IESA, Caracas \u2014 2013\u20132014' },
+    { title: 'BS in Administrative Sciences (Management)', org: 'Universidad Metropolitana (UNIMET) \u2014 1984\u20131989' },
+    { title: 'Trading Certifications', org: 'Advanced, Basic and Crypto \u2014 2023\u20132024' },
     { title: 'Coaching Certification & NLP Diploma', org: 'Financial behavior specialist' },
   ],
+  timeline: [
+    {
+      role: 'Independent Financial Consultant',
+      place: 'Spain / Global',
+      period: '2015 \u2014 Present',
+      detail:
+        'Personal investment portfolio management, risk-profile-based strategy design, and financial guidance.',
+    },
+    {
+      role: 'New Business Manager',
+      place: 'Bayer S.A. \u2013 Schering',
+      period: '2009 \u2014 2013',
+      detail: 'Financial analysis and viability assessments for product and business unit acquisitions.',
+    },
+    {
+      role: 'Regional Manager, Salesforce Effectiveness',
+      place: 'Schering AG (CECLA, Mexico)',
+      period: '2006 \u2014 2007',
+      detail:
+        'Regional sales force effectiveness project across Argentina, Brazil, Canada, Mexico and Colombia.',
+    },
+    {
+      role: 'Marketing Controlling Manager',
+      place: 'Schering de Venezuela',
+      period: '1999 \u2014 2004',
+      detail: 'Three-year budgets, sales projections, and capital investment planning.',
+    },
+  ],
+  languages: ['Spanish (native)', 'English (advanced)', 'Italian (intermediate)'],
 };
 
 export const complianceNote =

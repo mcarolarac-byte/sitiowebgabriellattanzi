@@ -30,20 +30,21 @@ export function Header() {
   return (
     <header className="border-b border-line bg-paper">
       <Container className="flex h-20 items-center justify-between">
+        {/* Logo + nombre — siempre en fila */}
         <Link
           href="/"
-          className="focus-ring rounded font-display text-xl font-semibold tracking-tight text-ink"
+          className="focus-ring flex items-center gap-3 rounded font-display text-xl font-semibold tracking-tight text-ink"
         >
           <Image
             src="/logo-gl.png"
             alt={site.name}
             width={40}
             height={40}
-            className="block"
             priority
           />
-          <span className="hidden md:inline ml-3">{site.name}</span>
+          <span>{site.name}</span>
         </Link>
+
         <nav aria-label="Principal" className="hidden gap-8 md:flex">
           {navLinks.map((link) => (
             <Link
@@ -55,6 +56,7 @@ export function Header() {
             </Link>
           ))}
         </nav>
+
         <div className="hidden items-center gap-4 sm:flex">
           <LanguageSwitcher />
           <Link
@@ -65,7 +67,8 @@ export function Header() {
           </Link>
         </div>
       </Container>
-      {/* Navegaci\u00f3n m\u00f3vil simple: enlaces visibles en una fila con scroll */}
+
+      {/* Nav m\u00f3vil */}
       <nav
         aria-label="Principal m\u00f3vil"
         className="flex items-center gap-6 overflow-x-auto border-t border-line px-6 py-3 md:hidden"

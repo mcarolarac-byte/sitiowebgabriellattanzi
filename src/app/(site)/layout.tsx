@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Playfair_Display, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "../globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -7,10 +7,10 @@ import { site } from "@/lib/content";
 import { CookieBanner } from "@/components/CookieBanner";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
-  axes: ["opsz"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const plexSans = IBM_Plex_Sans({
@@ -28,15 +28,15 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.baseUrl),
   title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} \u2014 ${site.tagline}`,
+    template: `%s \u2014 ${site.name}`,
   },
   description:
-    "Acompañamiento y educación financiera para planear tu retiro y entender tus inversiones, con más de 11 años de experiencia analizando mercados globales.",
+    "Acompa\u00f1amiento y educaci\u00f3n financiera para planear tu retiro y entender tus inversiones, con m\u00e1s de 11 a\u00f1os de experiencia analizando mercados globales.",
   openGraph: {
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} \u2014 ${site.tagline}`,
     description:
-      "Acompañamiento y educación financiera para planear tu retiro y entender tus inversiones.",
+      "Acompa\u00f1amiento y educaci\u00f3n financiera para planear tu retiro y entender tus inversiones.",
     url: site.baseUrl,
     siteName: site.name,
     locale: "es_ES",
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${fraunces.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${playfairDisplay.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper text-slate">
         <LanguageProvider>
