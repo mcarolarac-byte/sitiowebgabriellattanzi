@@ -13,6 +13,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [1.3.1] - 2026-09-01
+
+### Corregido
+- SSL/HTTPS activo en `www.gabriellattanzi.com`: dominio `www` añadido como dominio primario en Vercel, certificado SSL generado automáticamente
+- DNS en Cloudflare actualizado: CNAME `www` migrado de `cname.vercel-dns.com` (legacy) a `c410194cbfa69386.vercel-dns-017.com` (nuevo endpoint de Vercel)
+- `gabriellattanzi.com` (raíz) configurado para redirigir con 308 permanente a `www.gabriellattanzi.com`
+- Análisis de rendimiento completado: imágenes con `<Image>` de Next.js y `priority`/`sizes` ✅, fuentes con `next/font/google` ✅, Calendly como enlace externo sin iframe ✅, GTM con carga condicional al consentimiento ✅
+
+### Pendiente (mejoras opcionales, no urgentes)
+- Actualizar registro raíz `@` en Cloudflare de A (`76.76.21.21`) a CNAME (`c410194cbfa69386.vercel-dns-017.com`) — recomendado por Vercel
+- Agregar `cache-control` headers para assets estáticos en `next.config.ts`
+
+---
+
 ## [1.3.0] - 2026-08-31
 
 ### Añadido
