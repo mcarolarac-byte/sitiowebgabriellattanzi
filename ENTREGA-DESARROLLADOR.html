@@ -451,7 +451,7 @@
     <div class="gl-badge">GL</div>
     <div>
       <h1>Entrega del Proyecto</h1>
-      <div class="sub">gabriellattanzi.com · Sitio web de Gabriel Lattanzi · Preparado junio 2025</div>
+      <div class="sub">gabriellattanzi.com · Sitio web de Gabriel Lattanzi · Actualizado septiembre 2026</div>
     </div>
   </div>
 </div>
@@ -690,7 +690,7 @@ git push</pre>
           <div class="env-desc">Generalmente <code>production</code></div>
         </div>
         <div class="env-item">
-          <div class="env-key">SANITY_API_TOKEN</div>
+          <div class="env-key">SANITY_WRITE_TOKEN</div>
           <div class="env-desc">Token con permisos de escritura para guardar los leads del formulario. Generarlo en Manage → API → Tokens</div>
         </div>
         <div class="env-item">
@@ -700,6 +700,10 @@ git push</pre>
         <div class="env-item">
           <div class="env-key">TURNSTILE_SECRET_KEY</div>
           <div class="env-desc">Clave secreta de Cloudflare Turnstile. Solo en servidor, nunca expuesta al cliente</div>
+        </div>
+        <div class="env-item">
+          <div class="env-key">RESEND_API_KEY</div>
+          <div class="env-desc">Clave API de Resend para envío de correos de notificación. Si no está configurada, el formulario igual guarda el lead en Sanity pero no llega email de aviso al asesor.</div>
         </div>
       </div>
     </section>
@@ -718,7 +722,7 @@ git push</pre>
 │   │   ├── contacto/     ← Formulario de contacto + Calendly
 │   │   ├── que-hago/     ← Servicios
 │   │   ├── quien-soy/    ← Trayectoria de Gabriel
-│   │   ├── blog/         ← Listado e individual de posts
+│   │   ├── blog/         ← Listado (page.tsx = server, BlogContent.tsx = client i18n)
 │   │   └── privacidad/   ← Política de privacidad (GDPR)
 │   └── studio/           ← Sanity Studio (panel de administración)
 │
@@ -727,6 +731,7 @@ git push</pre>
 │   ├── Footer.tsx        ← Pie de página + disclaimers + LinkedIn
 │   ├── LanguageSwitcher.tsx ← Botón ES/EN con banderas SVG
 │   ├── Container.tsx     ← Wrapper de ancho máximo
+│   ├── CookieBanner.tsx  ← Banner GDPR/cookies (carga GTM al aceptar)
 │   └── Horizon.tsx       ← Elemento decorativo SVG
 │
 ├── contexts/
@@ -751,5 +756,25 @@ sanity/
       </div>
     </section>
 
-  </main>
+  
+<section id="notas" class="section">
+  <h2 class="section-title"><span class="num">08</span>Notas de entrega y deuda técnica</h2>
+  <div class="card">
+    <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:0.75rem;">GTM y Google Analytics 4</h3>
+    <p>El contenedor de GTM (<code>GTM-MGW5GBKK</code>) está instalado en el sitio. Para que GA4 empiece a registrar visitas hay que entrar a <a href="https://tagmanager.google.com" target="_blank">tagmanager.google.com</a>, crear una etiqueta de tipo <strong>Google Analytics: GA4 Configuration</strong> con el ID de medición del cliente, y configurarla para que dispare en <em>All Pages</em>. Sin ese paso GTM está presente pero vacío.</p>
+  </div>
+  <div class="card" style="margin-top:1rem;">
+    <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:0.75rem;">Cloudflare — HTTPS forzado</h3>
+    <p>Activar <strong>Always Use HTTPS</strong> en Cloudflare → SSL/TLS → Edge Certificates para redirigir automáticamente todo tráfico HTTP a HTTPS.</p>
+  </div>
+  <div class="card" style="margin-top:1rem;">
+    <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:0.75rem;">Tests unitarios</h3>
+    <p>Los archivos <code>ContactForm.test.tsx</code> y <code>contact-schema.test.ts</code> pueden estar desactualizados tras la conversión de la página de contacto a Client Component. El CI sigue pasando pero conviene revisarlos si se hace desarrollo activo sobre ese módulo.</p>
+  </div>
+  <div class="card" style="margin-top:1rem;">
+    <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:0.75rem;">Archivos ignorados en git</h3>
+    <p><code>Dev_Reference_gabriellattanzi.docx</code> y <code>gabriel 4.png</code> están en el directorio pero no en git (sin rastrear). No son necesarios para el proyecto; se pueden eliminar de la carpeta.</p>
+  </div>
+</section>
+</main>
 </div>
