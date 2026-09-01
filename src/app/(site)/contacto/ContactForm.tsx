@@ -3,12 +3,14 @@
 import { useActionState, useEffect, useRef } from "react";
 import Script from "next/script";
 import { submitContactForm, type ContactState } from "./actions";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const initialState: ContactState = { status: "idle" };
 
 const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 export function ContactForm() {
+  const { lang } = useLanguage();
   const [state, formAction, pending] = useActionState(
     submitContactForm,
     initialState
@@ -21,14 +23,46 @@ export function ContactForm() {
     }
   }, [state.status]);
 
+  const t = lang === 'en'
+    ? {
+        successTitle: 'Thank you for writing!',
+        successBody: 'I received your message and will reply as soon as possible.',
+        name: 'Name',
+        email: 'Email',
+        phone: 'Phone',
+        phoneOptional: '(optional)',
+        message: 'Message',
+        honeypot: 'Do not fill this field',
+        consentText: 'I have read and accept the',
+        privacyPolicy: 'Privacy Policy',
+        consentText2: 'and authorize the processing of my personal data so that Gabriel Lattanzi can respond to my inquiry. They will not be used for any other purpose without my consent.',
+        submit: 'Send message',
+        submitting: 'Sending…',
+      }
+    : {
+        successTitle: '¡Gracias por escribir!',
+        successBody: 'Recibí tu mensaje y te voy a responder lo antes posible.',
+        name: 'Nombre',
+        email: 'Correo',
+        phone: 'Teléfono',
+        phoneOptional: '(opcional)',
+        message: 'Mensaje',
+        honeypot: 'No llenar este campo',
+        consentText: 'He leído y acepto la',
+        privacyPolicy: 'Política de Privacidad',
+        consentText2: 'y autorizo el tratamiento de mis datos personales para que Gabriel Lattanzi pueda responder a mi consulta. No se usarán para ningún otro fin sin mi consentimiento.',
+        submit: 'Enviar mensaje',
+        submitting: 'Enviando…',
+      };
+
   if (state.status === "success") {
     return (
       <div className="rounded-sm border border-line bg-paper-dim p-8">
         <p className="font-display text-xl font-semibold text-ink">
-          ¡Gracias por escribir!
+          {t.successTitle}
         </p>
         <p className="mt-2 font-body text-sm text-slate-soft">
-          Recibí tu mensaje y te voy a responder lo antes posible.
+          {t.successBody}
         </p>
       </div>
     );
@@ -45,7 +79,7 @@ export function ContactForm() {
       )}
       <div>
         <label htmlFor="name" className="font-body text-sm font-medium text-ink">
-          Nombre
+          {t.name}
         </label>
         <input
           id="name"
@@ -66,7 +100,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="email" className="font-body text-sm font-medium text-ink">
-          Correo
+          {t.email}
         </label>
         <input
           id="email"
@@ -87,7 +121,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="phone" className="font-body text-sm font-medium text-ink">
-          Teléfono <span className="text-slate-soft">(opcional)</span>
+          {t.phone} <span className="text-slate-soft">{t.phoneOptional}</span>
         </label>
         <input
           id="phone"
@@ -107,7 +141,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="message" className="font-body text-sm font-medium text-ink">
-          Mensaje
+          {t.message}
         </label>
         <textarea
           id="message"
@@ -127,7 +161,7 @@ export function ContactForm() {
 
       {/* Honeypot: oculto para personas, si un bot lo llena se descarta el envío. */}
       <div className="hidden" aria-hidden="true">
-        <label htmlFor="website">No llenar este campo</label>
+        <label htmlFor="website">{t.honeypot}</label>
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
@@ -149,12 +183,11 @@ export function ContactForm() {
             className="focus-ring mt-0.5 h-4 w-4 shrink-0 rounded-sm border border-line accent-ink"
           />
           <label htmlFor="consent" className="font-body text-xs leading-relaxed text-slate">
-            He leído y acepto la{" "}
+            {t.consentText}{" "}
             <a href="/privacidad" className="underline hover:text-ink" target="_blank" rel="noopener noreferrer">
-              Política de Privacidad
+              {t.privacyPolicy}
             </a>{" "}
-            y autorizo el tratamiento de mis datos personales para que Gabriel Lattanzi pueda
-            responder a mi consulta. No se usarán para ningún otro fin sin mi consentimiento.
+            {t.consentText2}
           </label>
         </div>
         {state.fieldErrors?.consent && (
@@ -175,7 +208,7 @@ export function ContactForm() {
         disabled={pending}
         className="focus-ring rounded-sm bg-ink px-6 py-3 font-body text-sm font-medium text-paper transition-colors hover:bg-ink-soft disabled:opacity-60"
       >
-        {pending ? "Enviando…" : "Enviar mensaje"}
+        {pending ? t.submitting : t.submit}
       </button>
     </form>
   );
