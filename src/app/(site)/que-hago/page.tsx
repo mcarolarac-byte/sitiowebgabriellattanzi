@@ -29,7 +29,7 @@ export default function QueHago() {
     <>
       <section className="border-b border-line">
         <Container className="py-20">
-          <p className="font-data text-xs uppercase tracking-[0.2em] text-brass">
+          <p className="font-data text-xs uppercase tracking-[0.2em] text-brass-text">
             {t.eyebrow}
           </p>
           <h1 className="mt-3 max-w-2xl font-display text-4xl font-semibold text-ink">
@@ -50,7 +50,7 @@ export default function QueHago() {
                 className="grid gap-6 border-b border-line pb-14 last:border-b-0 last:pb-0 sm:grid-cols-[0.3fr_0.7fr] sm:items-center"
               >
                 <div>
-                  <p className="font-data text-xs uppercase tracking-[0.15em] text-brass">
+                  <p className="font-data text-xs uppercase tracking-[0.15em] text-brass-text">
                     {service.eyebrow}
                   </p>
                   <h2 className="mt-2 font-display text-2xl font-semibold text-ink">

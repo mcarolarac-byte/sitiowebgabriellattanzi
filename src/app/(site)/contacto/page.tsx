@@ -44,7 +44,7 @@ export default function ContactoPage() {
     <>
       <section className="border-b border-line">
         <Container className="py-20">
-          <p className="font-data text-xs uppercase tracking-[0.2em] text-brass">
+          <p className="font-data text-xs uppercase tracking-[0.2em] text-brass-text">
             {t.label}
           </p>
           <h1 className="mt-3 max-w-2xl font-display text-4xl font-semibold text-ink">

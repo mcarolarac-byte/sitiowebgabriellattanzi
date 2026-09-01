@@ -42,7 +42,7 @@ export default function Home() {
         <Container className="grid gap-12 py-12 sm:py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:py-20">
           {/* Columna izquierda */}
           <div>
-            <p className="font-data text-sm uppercase tracking-[0.2em] text-brass">
+            <p className="font-data text-sm uppercase tracking-[0.2em] text-brass-text">
               {hero.eyebrow}
             </p>
             <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.1] text-ink sm:text-5xl">
@@ -117,7 +117,7 @@ export default function Home() {
       {/* QU\u00c9 HAGO */}
       <section className="border-b border-line">
         <Container className="py-20">
-          <p className="font-data text-sm uppercase tracking-[0.2em] text-brass">
+          <p className="font-data text-sm uppercase tracking-[0.2em] text-brass-text">
             {t.whatIDoLabel}
           </p>
           <h2 className="mt-3 max-w-2xl font-display text-4xl font-semibold text-ink">

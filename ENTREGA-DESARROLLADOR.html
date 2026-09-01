@@ -470,6 +470,7 @@
       <a href="#blog"><span class="num">05</span> Gestión del blog</a>
       <a href="#env"><span class="num">06</span> Variables de entorno</a>
       <a href="#estructura"><span class="num">07</span> Estructura del código</a>
+      <a href="#rendimiento"><span class="num">08</span> Rendimiento</a>
     </nav>
   </aside>
 
@@ -508,7 +509,7 @@
         </div>
         <div class="access-card">
           <div class="service">Dominio</div>
-          <div class="what"><code>www.gabriellattanzi.com</code> — dominio primario con SSL activo. DNS gestionado en Cloudflare (DNS only, sin proxy). Registros: CNAME <code>www</code> → <code>c410194cbfa69386.vercel-dns-017.com</code> y A <code>@</code> → <code>76.76.21.21</code> (raíz redirige 308 a www). Certificado SSL generado automáticamente por Vercel.</div>
+          <div class="what"><code>www.gabriellattanzi.com</code> — dominio primario con SSL activo. DNS gestionado en Cloudflare (DNS only, sin proxy). Registros: CNAME <code>www</code> → <code>c410194cbfa69386.vercel-dns-017.com</code> y CNAME <code>@</code> → <code>c410194cbfa69386.vercel-dns-017.com</code> (raíz redirige 308 a www). DNS only en Cloudflare (sin proxy). Certificado SSL generado automáticamente por Vercel.</div>
           <div class="action">Solicitar credenciales del registrador al cliente (Gabriel Lattanzi)</div>
         </div>
       </div>
@@ -757,6 +758,103 @@ sanity/
     </section>
 
   
+    <!-- 08 RENDIMIENTO -->
+    <section class="section" id="rendimiento">
+      <div class="section-head">
+        <span class="section-num">08</span>
+        <h2>Rendimiento (PageSpeed Insights)</h2>
+      </div>
+
+      <div class="prose">
+        <p>Análisis realizado el 2026-09-01 con <strong>Lighthouse 13.4.1</strong> sobre <a href="https://www.gabriellattanzi.com" target="_blank">www.gabriellattanzi.com</a>. Informe completo: <a href="https://pagespeed.web.dev/analysis/https-www-gabriellattanzi-com/21x23bi9ps" target="_blank">pagespeed.web.dev</a></p>
+      </div>
+
+      <table class="stack-table" style="margin-top:1rem">
+        <thead>
+          <tr>
+            <th>Categoría</th>
+            <th>Móvil</th>
+            <th>Desktop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Performance</strong></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">94</span></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">100</span></td>
+          </tr>
+          <tr>
+            <td><strong>Accessibility</strong></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">96</span></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">96</span></td>
+          </tr>
+          <tr>
+            <td><strong>Best Practices</strong></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">100</span></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">100</span></td>
+          </tr>
+          <tr>
+            <td><strong>SEO</strong></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">100</span></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">100</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="stack-table" style="margin-top:1.5rem">
+        <thead>
+          <tr>
+            <th>Core Web Vital</th>
+            <th>Móvil (4G lento)</th>
+            <th>Desktop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>FCP</strong> — First Contentful Paint</td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">1.3 s ✅</span></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">0.2 s ✅</span></td>
+          </tr>
+          <tr>
+            <td><strong>LCP</strong> — Largest Contentful Paint</td>
+            <td><span class="tag" style="background:#fef9c3;color:#713f12">2.8 s 🟡</span></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">0.5 s ✅</span></td>
+          </tr>
+          <tr>
+            <td><strong>TBT</strong> — Total Blocking Time</td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">30 ms ✅</span></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">10 ms ✅</span></td>
+          </tr>
+          <tr>
+            <td><strong>CLS</strong> — Cumulative Layout Shift</td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">0 ✅</span></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">0 ✅</span></td>
+          </tr>
+          <tr>
+            <td><strong>Speed Index</strong></td>
+            <td><span class="tag" style="background:#fef9c3;color:#713f12">3.9 s 🟡</span></td>
+            <td><span class="tag" style="background:#dcfce7;color:#166534">0.3 s ✅</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn" style="margin-top:1.25rem">
+        <strong>Mejoras opcionales identificadas (no urgentes):</strong>
+        <ul style="margin-top:0.5rem;padding-left:1.25rem;display:flex;flex-direction:column;gap:0.3rem">
+          <li>Contraste de color insuficiente en algún elemento (impide llegar a Accessibility 100)</li>
+          <li>Solicitudes render-blocking en móvil (~150 ms) — principalmente fuentes de Google</li>
+          <li>JavaScript legacy detectado (16 KiB) — optimizable ajustando <code>browserslist</code> en <code>package.json</code></li>
+          <li>28 KiB de JS no utilizado en móvil — evaluar con <code>next/bundle-analyzer</code></li>
+          <li>Imágenes <code>alt</code> con texto redundante — menor impacto, anotación informativa de Lighthouse</li>
+        </ul>
+      </div>
+
+      <div class="callout ok" style="margin-top:1rem">
+        <strong>Conclusión:</strong> El sitio tiene un rendimiento excelente, especialmente en desktop (Performance 100). En móvil el LCP de 2.8 s está en la zona amarilla (umbral verde: &lt;2.5 s) pero es un resultado muy competitivo para un sitio con imágenes de alta calidad sobre red 4G lenta emulada. No se requiere acción inmediata.
+      </div>
+    </section>
+
+
 <section id="notas" class="section">
   <h2 class="section-title"><span class="num">08</span>Notas de entrega y deuda técnica</h2>
   <div class="card">
