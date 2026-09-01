@@ -30,11 +30,11 @@ const securityHeaders = [
             // futuro se agregan flujos con datos sensibles, reconsiderar
             // con nonces vía proxy.ts.
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com",
             "style-src 'self' 'unsafe-inline'",
-            "img-src 'self' https://cdn.sanity.io data:",
+            "img-src 'self' https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com data:",
             "font-src 'self'",
-            "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io",
+            "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com",
             "frame-src https://challenges.cloudflare.com",
             "frame-ancestors 'self'",
             "base-uri 'self'",
