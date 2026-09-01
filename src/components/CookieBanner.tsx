@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -21,22 +21,42 @@ function loadGTM() {
   document.head.appendChild(script);
 }
 
+function getStoredConsent(): string | null {
+  try {
+    return localStorage.getItem('cookie_consent');
+  } catch {
+    return null;
+  }
+}
+
+// useSyncExternalStore requires a subscribe fn; localStorage has no same-tab
+// events so we use a no-op — React still switches to the client snapshot after
+// hydration, which is when we first read the real localStorage value.
+const noopSubscribe = () => () => {};
+
 export function CookieBanner() {
   const { lang } = useLanguage();
-  const [visible, setVisible] = useState(false);
 
+  // Reads localStorage safely across SSR/hydration:
+  // - server snapshot → null (localStorage unavailable)
+  // - client snapshot → actual stored value (after hydration)
+  const storedConsent = useSyncExternalStore(
+    noopSubscribe,
+    getStoredConsent,
+    () => null
+  );
+
+  // Tracks the user's choice within this session so the banner hides
+  // immediately on click, without waiting for a storage event.
+  const [sessionConsent, setSessionConsent] = useState<string | null>(null);
+
+  const consent = sessionConsent ?? storedConsent;
+
+  // Load GTM when consent is accepted.
+  // No setState call here → no react-hooks/set-state-in-effect violation.
   useEffect(() => {
-    try {
-      const consent = localStorage.getItem('cookie_consent');
-      if (consent === 'accepted') {
-        loadGTM();
-      } else if (!consent) {
-        setVisible(true);
-      }
-    } catch {
-      // localStorage no disponible
-    }
-  }, []);
+    if (consent === 'accepted') loadGTM();
+  }, [consent]);
 
   const t =
     lang === 'en'
@@ -61,8 +81,8 @@ export function CookieBanner() {
     } catch {
       // ignore
     }
+    setSessionConsent('accepted');
     loadGTM();
-    setVisible(false);
   }
 
   function handleReject() {
@@ -71,10 +91,11 @@ export function CookieBanner() {
     } catch {
       // ignore
     }
-    setVisible(false);
+    setSessionConsent('rejected');
   }
 
-  if (!visible) return null;
+  // Show banner only when no consent decision has been made yet
+  if (consent !== null) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-line bg-paper px-4 py-4 shadow-[0_-2px_12px_rgba(0,0,0,0.06)]">
