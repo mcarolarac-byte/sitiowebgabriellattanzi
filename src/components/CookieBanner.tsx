@@ -10,8 +10,7 @@ function loadGTM() {
   if (typeof window === 'undefined') return;
   if (document.getElementById('gtm-script')) return;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const w = window as any;
+  const w = window as unknown as { dataLayer: Record<string, unknown>[] };
   w.dataLayer = w.dataLayer || [];
   w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 
