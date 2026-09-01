@@ -47,7 +47,7 @@ export default function QueHago() {
             {services.map((service) => (
               <div
                 key={service.title}
-                className="grid gap-6 border-b border-line pb-14 last:border-b-0 last:pb-0 sm:grid-cols-[0.3fr_0.7fr]"
+                className="grid gap-6 border-b border-line pb-14 last:border-b-0 last:pb-0 sm:grid-cols-[0.3fr_0.7fr] sm:items-center"
               >
                 <div>
                   <p className="font-data text-xs uppercase tracking-[0.15em] text-brass">
