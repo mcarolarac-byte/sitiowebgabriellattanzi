@@ -43,7 +43,7 @@ export function Footer() {
           </div>
           <ul className="flex flex-col gap-2 border-t border-paper/10 pt-4">
             {disclaimers.map((text, i) => (
-              <li key={i} className="leading-relaxed text-paper/40">
+              <li key={i} className="leading-relaxed text-paper/55">
                 <span className="mr-1 font-semibold text-paper/55">{i + 1}.</span>
                 {text}
               </li>
