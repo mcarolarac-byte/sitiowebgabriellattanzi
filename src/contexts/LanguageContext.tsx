@@ -5,6 +5,7 @@ import React, {
   useContext,
   useSyncExternalStore,
   useCallback,
+  useEffect,
 } from 'react';
 
 export type Lang = 'es' | 'en';
@@ -56,6 +57,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     // Notificar a todos los suscriptores en la misma pestaña
     window.dispatchEvent(new Event(EVENT_KEY));
   }, []);
+
+  // Sincroniza el atributo lang del HTML al montar y cuando cambia el idioma
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   return (
     <LanguageContext.Provider value={{ lang, setLang }}>

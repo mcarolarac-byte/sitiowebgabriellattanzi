@@ -8,7 +8,7 @@ on:
 
 jobs:
   check:
-    name: TypeScript + ESLint
+    name: TypeScript + ESLint + Tests + Build
     runs-on: ubuntu-latest
 
     steps:
@@ -29,3 +29,17 @@ jobs:
 
       - name: Linting (ESLint)
         run: npm run lint
+
+      - name: Tests (Jest)
+        run: npm test -- --ci --passWithNoTests
+
+      - name: Build de producción
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_API_VERSION: ${{ secrets.NEXT_PUBLIC_SANITY_API_VERSION }}
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+          TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
