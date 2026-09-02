@@ -10,6 +10,7 @@ import { contactSchema } from "./contact-schema";
 export type ContactState = {
   status: "idle" | "success" | "error";
   message?: string;
+  errorCode?: string;
   fieldErrors?: Record<string, string>;
 };
 
@@ -75,7 +76,7 @@ export async function submitContactForm(
   if (isRateLimited(ip)) {
     return {
       status: "error",
-      message: "Demasiados intentos. Espera unos minutos y vuelve a intentar.",
+      errorCode: "rate_limited",
     };
   }
 
@@ -100,7 +101,7 @@ export async function submitContactForm(
     }
     return {
       status: "error",
-      message: "Revisa los datos del formulario.",
+      errorCode: "validation_error",
       fieldErrors,
     };
   }
@@ -115,7 +116,7 @@ export async function submitContactForm(
   if (!isHuman) {
     return {
       status: "error",
-      message: "No pudimos verificar que eres una persona. Intenta de nuevo.",
+      errorCode: "turnstile_failed",
     };
   }
 

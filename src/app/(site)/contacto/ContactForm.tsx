@@ -38,6 +38,13 @@ export function ContactForm() {
         consentText2: 'and authorize the processing of my personal data so that Gabriel Lattanzi can respond to my inquiry. They will not be used for any other purpose without my consent.',
         submit: 'Send message',
         submitting: 'Sending…',
+        errors: {
+          rate_limited: 'Too many attempts. Wait a few minutes and try again.',
+          turnstile_failed: 'We could not verify that you are human. Please try again.',
+          save_failed: 'Your message could not be saved. Please try again in a few minutes.',
+          validation_error: 'Please check the form fields.',
+          unknown: 'An error occurred. Please try again.',
+        },
       }
     : {
         successTitle: '¡Gracias por escribir!',
@@ -53,6 +60,13 @@ export function ContactForm() {
         consentText2: 'y autorizo el tratamiento de mis datos personales para que Gabriel Lattanzi pueda responder a mi consulta. No se usarán para ningún otro fin sin mi consentimiento.',
         submit: 'Enviar mensaje',
         submitting: 'Enviando…',
+        errors: {
+          rate_limited: 'Demasiados intentos. Espera unos minutos y vuelve a intentar.',
+          turnstile_failed: 'No pudimos verificar que eres una persona. Intenta de nuevo.',
+          save_failed: 'No se pudo guardar tu mensaje. Intenta de nuevo en unos minutos.',
+          validation_error: 'Revisa los datos del formulario.',
+          unknown: 'Ocurrió un error. Intenta de nuevo.',
+        },
       };
 
   if (state.status === "success") {
@@ -197,9 +211,11 @@ export function ContactForm() {
         )}
       </div>
 
-      {state.status === "error" && state.message && (
+      {state.status === "error" && (
         <p role="alert" className="font-body text-sm text-red-700">
-          {state.message}
+          {state.errorCode
+            ? (t.errors[state.errorCode as keyof typeof t.errors] ?? t.errors.unknown)
+            : (state.message ?? t.errors.unknown)}
         </p>
       )}
 
