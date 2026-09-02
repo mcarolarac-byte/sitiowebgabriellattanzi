@@ -78,7 +78,8 @@ export default function PrivacidadPage() {
             <p className="mt-3">
               Tus datos se conservarán durante el tiempo necesario para gestionar tu consulta
               y, en su caso, la relación de servicio. Si no se establece ninguna relación
-              contractual, los datos se eliminarán en un plazo máximo de <strong>12 meses</strong> desde
+              contractual, realizamos una revisión manual periódica de los datos almacenados
+              con el objetivo de eliminarlos en un plazo máximo de <strong>12 meses</strong> desde
               la recepción del formulario, salvo que solicites su eliminación antes.
             </p>
           </div>
