@@ -52,7 +52,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${playfairDisplay.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper text-slate">
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MGW5GBKK" height="0" width="0" style={{display:"none",visibility:"hidden"}}></iframe></noscript>
         <LanguageProvider>
           <a
             href="#contenido"
