@@ -54,7 +54,7 @@ describe("contactSchema — validación del formulario de contacto", () => {
     });
 
     it("acepta teléfono undefined", () => {
-      const { phone, ...rest } = validData;
+      const { phone: _phone, ...rest } = validData;
       expect(contactSchema.safeParse(rest).success).toBe(true);
     });
 
@@ -107,7 +107,7 @@ describe("contactSchema — validación del formulario de contacto", () => {
     });
 
     it("rechaza formulario sin consentimiento (consent ausente)", () => {
-      const { consent, ...rest } = validData;
+      const { consent: _consent, ...rest } = validData;
       const result = contactSchema.safeParse(rest);
       expect(result.success).toBe(false);
       if (!result.success) {

@@ -30,11 +30,11 @@ const securityHeaders = [
             // futuro se agregan flujos con datos sensibles, reconsiderar
             // con nonces vía proxy.ts.
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com",
             "style-src 'self' 'unsafe-inline'",
-            "img-src 'self' https://cdn.sanity.io data:",
+            "img-src 'self' https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com data:",
             "font-src 'self'",
-            "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io",
+            "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://region1.analytics.google.com",
             "frame-src https://challenges.cloudflare.com",
             "frame-ancestors 'self'",
             "base-uri 'self'",
@@ -52,6 +52,20 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        // Assets de Next.js: inmutables (el hash cambia con cada build)
+        source: "/_next/static/(.*)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      {
+        // Imágenes optimizadas por Next.js
+        source: "/_next/image(.*)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+        ],
+      },
       {
         // El Studio de Sanity necesita sus propios permisos de script/estilo
         // y no debe heredar el CSP estricto del sitio público.

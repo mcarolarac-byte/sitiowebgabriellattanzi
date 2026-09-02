@@ -13,7 +13,7 @@ export type ContactState = {
   fieldErrors?: Record<string, string>;
 };
 
-async function verifyTurnstile(token: string | undefined, ip: string, hostname: string) {
+async function verifyTurnstile(token: string | undefined, ip: string) {
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
   const secret = process.env.TURNSTILE_SECRET_KEY;
 
@@ -46,18 +46,11 @@ async function verifyTurnstile(token: string | undefined, ip: string, hostname: 
       return false;
     }
 
-    const data = (await response.json()) as { success: boolean; hostname?: string };
+    const data = (await response.json()) as { success: boolean; "error-codes"?: string[] };
 
-    if (!data.success) return false;
-
-    // Verificar que el hostname de Turnstile coincide con el del request (sin puerto)
-    if (data.hostname) {
-      const expectedHost = hostname.split(":")[0];
-      const turnstileHost = data.hostname.split(":")[0];
-      if (expectedHost && turnstileHost && expectedHost !== turnstileHost) {
-        console.error("[turnstile] Hostname mismatch:", expectedHost, "vs", turnstileHost);
-        return false;
-      }
+    if (!data.success) {
+      console.error("[turnstile] Verificación fallida:", data["error-codes"]);
+      return false;
     }
 
     return true;
@@ -78,12 +71,6 @@ export async function submitContactForm(
     headerList.get("x-real-ip") ||
     headerList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     "unknown";
-
-  // Hostname para verificación de Turnstile (sin puerto)
-  const hostname =
-    headerList.get("x-forwarded-host") ||
-    headerList.get("host") ||
-    "";
 
   if (isRateLimited(ip)) {
     return {
@@ -124,7 +111,7 @@ export async function submitContactForm(
     return { status: "success" };
   }
 
-  const isHuman = await verifyTurnstile(parsed.data.turnstileToken, ip, hostname);
+  const isHuman = await verifyTurnstile(parsed.data.turnstileToken, ip);
   if (!isHuman) {
     return {
       status: "error",

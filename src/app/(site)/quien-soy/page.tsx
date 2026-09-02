@@ -51,7 +51,7 @@ export default function QuienSoy() {
             </div>
           </div>
           <div>
-            <p className="font-data text-xs uppercase tracking-[0.2em] text-brass">
+            <p className="font-data text-xs uppercase tracking-[0.2em] text-brass-text">
               {t.eyebrow}
             </p>
             <h1 className="mt-3 font-display text-4xl font-semibold text-ink">

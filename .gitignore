@@ -42,3 +42,7 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# Archivos de referencia locales (no forman parte del código)
+*.docx
+gabriel\ 4.png

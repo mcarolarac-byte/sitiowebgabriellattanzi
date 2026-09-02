@@ -132,7 +132,7 @@ npm run dev
 
 | Rama | Propósito | Deploy automático |
 |---|---|---|
-| `master` | Producción — gabriellattanzi.com | Sí (Vercel, dominio custom) |
+| `master` | Producción — www.gabriellattanzi.com | Sí (Vercel, dominio custom) |
 | `develop` | Staging — validar cambios antes de producción | Sí (Vercel Preview URL) |
 | `feature/*` | Una rama por tarea/cambio | No (PR hacia develop) |
 
