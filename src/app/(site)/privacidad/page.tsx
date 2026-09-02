@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { site } from "@/lib/content";
+import { DocumentTitle } from "@/components/DocumentTitle";
 
 export const metadata: Metadata = {
   title: "Política de Privacidad",
@@ -10,12 +11,13 @@ export const metadata: Metadata = {
 export default function PrivacidadPage() {
   return (
     <section>
+      <DocumentTitle es="Política de Privacidad" en="Privacy Policy" />
       <Container className="max-w-2xl py-20">
         <h1 className="font-display text-3xl font-semibold text-ink">
           Política de Privacidad
         </h1>
         <p className="mt-3 font-body text-sm text-slate-soft">
-          Última actualización: 31 de agosto de 2026
+          Última actualización: 2 de septiembre de 2026
         </p>
 
         <div className="mt-8 flex flex-col gap-8 font-body leading-relaxed text-slate">
@@ -123,6 +125,16 @@ export default function PrivacidadPage() {
                 Está configurado en la región de la UE para minimizar transferencias.
               </li>
               <li>
+                <strong>Google Tag Manager (Google LLC, EE.UU.):</strong> se carga únicamente
+                si aceptas las cookies en el aviso de este sitio. GTM puede activar herramientas
+                de medición de visitas (como Google Analytics) y, en ese caso, instalar cookies
+                de analítica en tu navegador. Si rechazas las cookies, GTM no se carga y no se
+                instala ninguna cookie de este tipo. Consulta la{" "}
+                <a href="https://policies.google.com/privacy" className="underline hover:text-ink" target="_blank" rel="noopener noreferrer">
+                  política de privacidad de Google
+                </a>.
+              </li>
+              <li>
                 <strong>Calendly (Calendly LLC, EE.UU.):</strong> si eliges agendar una llamada,
                 se abrirá en una pestaña nueva el sitio de Calendly. Calendly solo se carga
                 cuando haces clic en el enlace; no se incrusta en el sitio ni se cargan sus
@@ -133,10 +145,6 @@ export default function PrivacidadPage() {
                 </a>.
               </li>
             </ul>
-            <p className="mt-3">
-              <strong>Google Analytics no está activo en este sitio.</strong> No se instalan
-              cookies publicitarias, de seguimiento ni analíticas de terceros.
-            </p>
           </div>
 
           <div>
@@ -152,7 +160,7 @@ export default function PrivacidadPage() {
           <div>
             <h2 className="font-display text-xl font-semibold text-ink">7. Transferencias internacionales</h2>
             <p className="mt-3">
-              Algunos servicios mencionados (Sanity, Vercel, Resend, Cloudflare, Sentry)
+              Algunos servicios mencionados (Sanity, Vercel, Resend, Cloudflare, Sentry, Google)
               están ubicados en Estados Unidos u otras jurisdicciones fuera del Espacio
               Económico Europeo. Las transferencias de datos a estos proveedores pueden
               realizarse bajo distintas garantías — como cláusulas contractuales tipo
@@ -166,16 +174,23 @@ export default function PrivacidadPage() {
           <div>
             <h2 className="font-display text-xl font-semibold text-ink">8. Cookies</h2>
             <p className="mt-3">
-              Este sitio web <strong>no utiliza cookies publicitarias, analíticas ni de
-              seguimiento de terceros</strong>. Pueden usarse cookies técnicas estrictamente
-              necesarias para el funcionamiento del sitio (por ejemplo, las que genera el
-              propio servidor Next.js o las del widget de Turnstile durante la verificación).
+              Este sitio usa un aviso de cookies para que puedas decidir antes de que se
+              instale cualquier cookie no esencial:
             </p>
-            <p className="mt-2">
-              Si en el futuro se incorporaran herramientas de analítica u otras tecnologías
-              que requieran cookies no esenciales, se actualizará esta política y se solicitará
-              tu consentimiento previo.
-            </p>
+            <ul className="mt-2 list-disc pl-5">
+              <li>
+                <strong>Si rechazas:</strong> solo se usan cookies técnicas estrictamente
+                necesarias para el funcionamiento del sitio (las que genera el propio servidor
+                Next.js o el widget de Turnstile durante la verificación del formulario). No se
+                instala ninguna cookie de analítica ni de seguimiento.
+              </li>
+              <li>
+                <strong>Si aceptas:</strong> se carga Google Tag Manager, que puede instalar
+                cookies de analítica de Google para medir visitas de forma agregada y mejorar
+                el sitio. Puedes cambiar tu preferencia en cualquier momento borrando las
+                cookies del sitio en la configuración de tu navegador.
+              </li>
+            </ul>
           </div>
 
           <div>

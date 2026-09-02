@@ -4,6 +4,7 @@ import { Container } from "@/components/Container";
 import { site } from "@/lib/content";
 import { ContactForm } from "./ContactForm";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { DocumentTitle } from "@/components/DocumentTitle";
 
 export default function ContactoPage() {
   const { lang } = useLanguage();
@@ -15,14 +16,12 @@ export default function ContactoPage() {
         subhead:
           "Write me whatever you need, or if you prefer to go straight to it, schedule a free first call at the time that works best for you.",
         writeTitle: 'Write to me',
-        writeSubtitle: 'I\'ll reply directly to the email you leave.',
+        writeSubtitle: "I'll reply directly to the email you leave.",
         scheduleTitle: 'Or schedule directly',
         scheduleSubtitle: 'Choose the time that suits you on my calendar.',
         scheduleBody:
           'To schedule a call, click the button below. It will open Calendly in a new tab where you can choose the day and time that suits you best.',
-        scheduleNote:
-          'Para agendar una llamada, haz clic en el botón de abajo. Se abrirá el calendario de Calendly en una pestaña nueva, donde podrás elegir el día y la hora que mejor te convenga.',
-        calendarBtn: 'Open calendar → Abrir calendario',
+        calendarBtn: 'Open calendar',
       }
     : {
         label: 'Contacto',
@@ -35,13 +34,12 @@ export default function ContactoPage() {
         scheduleSubtitle: 'Elige el horario que prefieras en mi calendario.',
         scheduleBody:
           'Para agendar una llamada, haz clic en el botón de abajo. Se abrirá el calendario de Calendly en una pestaña nueva, donde podrás elegir el día y la hora que mejor te convenga.',
-        scheduleNote:
-          'To schedule a call, click the button below. It will open Calendly in a new tab so you can choose the time that suits you best.',
-        calendarBtn: 'Abrir calendario → Open calendar',
+        calendarBtn: 'Abrir calendario',
       };
 
   return (
     <>
+      <DocumentTitle es="Contacto" en="Contact" />
       <section className="border-b border-line">
         <Container className="py-20">
           <p className="font-data text-xs uppercase tracking-[0.2em] text-brass-text">
@@ -87,9 +85,6 @@ export default function ContactoPage() {
             <div className="mt-8 rounded-sm border border-line bg-paper-dim p-8">
               <p className="font-body text-sm leading-relaxed text-slate">
                 {t.scheduleBody}
-              </p>
-              <p className="mt-2 font-body text-xs text-slate-soft">
-                {t.scheduleNote}
               </p>
               <a
                 href={site.calendlyUrl}
