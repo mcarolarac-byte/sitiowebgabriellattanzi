@@ -54,6 +54,7 @@ describe("contactSchema — validación del formulario de contacto", () => {
     });
 
     it("acepta teléfono undefined", () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { phone: _phone, ...rest } = validData;
       expect(contactSchema.safeParse(rest).success).toBe(true);
     });
@@ -107,6 +108,7 @@ describe("contactSchema — validación del formulario de contacto", () => {
     });
 
     it("rechaza formulario sin consentimiento (consent ausente)", () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { consent: _consent, ...rest } = validData;
       const result = contactSchema.safeParse(rest);
       expect(result.success).toBe(false);
