@@ -33,7 +33,9 @@ const securityHeaders = [
             "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com",
             // SHA-256 exactos de los <style> inline que inyecta Next.js en _not-found y _global-error.
             // Actualizar si se hace upgrade de Next.js (ejecutar: node scripts/csp-hashes.mjs).
-            "style-src 'self' 'sha256-Wwucq8eX2r0YFymkQhDXm5hN0+FfSvI3s4JSSaqa4iw=' 'sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='",
+            // 'unsafe-hashes' permite hashes en atributos style= (necesario para next/image y next-route-announcer).
+            // Los tres hashes de estilo inline son de Next.js, no de código propio.
+            "style-src 'self' 'unsafe-hashes' 'sha256-zlqnbDt84zf1iSefLU/ImC54isoprH/MRiVZGskwexk=' 'sha256-ZDrxqUOB4m/L0JWL/+gS52g1CRH0l/qwMhjTw5Z/Fsc=' 'sha256-32t0bJPIyxns/QqsW8RE3JGUERKnHL5RygHBgJvEanc=' 'sha256-Wwucq8eX2r0YFymkQhDXm5hN0+FfSvI3s4JSSaqa4iw=' 'sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='",
             "img-src 'self' https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com data:",
             "font-src 'self'",
             "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://region1.analytics.google.com",
