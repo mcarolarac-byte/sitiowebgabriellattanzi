@@ -31,7 +31,9 @@ const securityHeaders = [
             // con nonces vía proxy.ts.
             "default-src 'self'",
             "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com",
-            "style-src 'self' 'unsafe-inline'",
+            // SHA-256 exactos de los <style> inline que inyecta Next.js en _not-found y _global-error.
+            // Actualizar si se hace upgrade de Next.js (ejecutar: node scripts/csp-hashes.mjs).
+            "style-src 'self' 'sha256-Wwucq8eX2r0YFymkQhDXm5hN0+FfSvI3s4JSSaqa4iw=' 'sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='",
             "img-src 'self' https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com data:",
             "font-src 'self'",
             "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://region1.analytics.google.com",
