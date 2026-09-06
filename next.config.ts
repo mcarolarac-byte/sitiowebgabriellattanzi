@@ -46,6 +46,22 @@ const securityHeaders = [
     : []),
 ];
 
+// Headers básicos para el Studio de Sanity. Sin CSP: el Studio carga
+// scripts y estilos dinámicamente (SPA compleja) y una CSP estricta
+// lo rompería. HSTS no es necesario aquí porque el navegador lo cachea
+// por origen y ya lo recibe en cualquier otra ruta del sitio.
+const studioHeaders = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+  },
+  // Refuerza el noindex declarado en el metadata del layout del Studio.
+  { key: "X-Robots-Tag", value: "noindex, nofollow" },
+];
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
@@ -67,8 +83,14 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // El Studio de Sanity necesita sus propios permisos de script/estilo
-        // y no debe heredar el CSP estricto del sitio público.
+        // Studio de Sanity: headers básicos sin CSP.
+        source: "/studio(.*)",
+        headers: studioHeaders,
+      },
+      {
+        // Sitio público: headers completos con CSP en producción.
+        // La negación (?!studio) excluye el Studio para no pisar
+        // los headers que definimos arriba.
         source: "/((?!studio).*)",
         headers: securityHeaders,
       },
