@@ -22,18 +22,13 @@ const securityHeaders = [
         {
           key: "Content-Security-Policy",
           value: [
-            // script-src sin 'unsafe-inline': el hash cubre el único script
-            // inline que Next.js inyecta (inicialización RSC). Los chunks se
-            // cargan desde 'self' y los scripts externos via allowlist.
-            // Si se hace upgrade de Next.js y el sitio deja de funcionar,
-            // correr: npm run build && node scripts/csp-hashes.mjs
+            // 'unsafe-inline' en script-src: los RSC payload chunks (self.__next_f.push)
+            // son scripts inline que cambian por página/build y no se pueden hashear.
+            // Nonces eliminarían esto pero obligan a renderizado dinámico, incompatible
+            // con generación estática. Riesgo aceptado: sitio sin sesiones ni datos
+            // sensibles en el cliente. Revisitar si se añaden flujos autenticados.
             "default-src 'self'",
-            "script-src 'self' "
-            // Hash del script de inicialización RSC que Next.js inyecta en todas las páginas.
-            // Generado con: npm run build && node scripts/csp-hashes.mjs
-            // Actualizar tras upgrades de Next.js si el hash cambia.
-            + "'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' "
-            + "https://challenges.cloudflare.com https://www.googletagmanager.com",
+            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com",
             // SHA-256 exactos de los <style> inline que inyecta Next.js en _not-found y _global-error.
             // Actualizar si se hace upgrade de Next.js (ejecutar: node scripts/csp-hashes.mjs).
             // 'unsafe-hashes' permite hashes en atributos style= (necesario para next/image y next-route-announcer).
