@@ -8,6 +8,9 @@ import { BlogContent } from "./BlogContent";
 export const metadata: Metadata = {
   title: "Blog",
   description: `Artículos de ${site.name} sobre retiro, inversión y educación financiera.`,
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export const revalidate = 60;

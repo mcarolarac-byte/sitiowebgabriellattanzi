@@ -57,11 +57,11 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-4 sm:flex">
+        <div className="flex items-center gap-4">
           <LanguageSwitcher />
           <Link
             href="/contacto#agenda"
-            className="focus-ring rounded-sm bg-ink px-4 py-2 font-body text-sm text-paper transition-colors hover:bg-ink-soft"
+            className="focus-ring hidden rounded-sm bg-ink px-4 py-2 font-body text-sm text-paper transition-colors hover:bg-ink-soft sm:inline-block"
           >
             {ctaLabel}
           </Link>
@@ -82,9 +82,6 @@ export function Header() {
             {link.label}
           </Link>
         ))}
-        <div className="ml-auto shrink-0">
-          <LanguageSwitcher />
-        </div>
       </nav>
     </header>
   );

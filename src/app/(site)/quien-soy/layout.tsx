@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Quién soy",
   description:
     "Conoce la trayectoria de Gabriel Lattanzi: más de 11 años analizando mercados globales, Executive MBA en el IESA y certificación MiFID II. Asesor financiero independiente en Barcelona.",
+  alternates: {
+    canonical: "/quien-soy",
+  },
   openGraph: {
     title: "Quién soy — Gabriel Lattanzi",
     description:

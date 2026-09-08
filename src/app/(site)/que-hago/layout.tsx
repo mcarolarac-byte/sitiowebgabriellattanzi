@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Qué hago",
   description:
     "Servicios de Gabriel Lattanzi: planificación de retiro, educación en inversión y mercados, y mentoría financiera 1:1. Acompañamiento personalizado sin venta de productos.",
+  alternates: {
+    canonical: "/que-hago",
+  },
   openGraph: {
     title: "Qué hago — Gabriel Lattanzi",
     description:

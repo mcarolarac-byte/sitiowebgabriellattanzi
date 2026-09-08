@@ -34,6 +34,9 @@ export const metadata: Metadata = {
   },
   description:
     "Acompañamiento y educación financiera para planear tu retiro y entender tus inversiones, con más de 11 años de experiencia analizando mercados globales.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: `${site.name} — ${site.tagline}`,
     description:
@@ -42,6 +45,12 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: "es_ES",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — ${site.tagline}`,
+    description:
+      "Acompañamiento y educación financiera para planear tu retiro y entender tus inversiones.",
   },
 };
 

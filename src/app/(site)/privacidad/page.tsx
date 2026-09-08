@@ -6,6 +6,9 @@ import { DocumentTitle } from "@/components/DocumentTitle";
 export const metadata: Metadata = {
   title: "Política de Privacidad",
   description: "Información sobre el tratamiento de datos personales en gabriellattanzi.com, conforme al Reglamento General de Protección de Datos (RGPD/GDPR).",
+  alternates: {
+    canonical: "/privacidad",
+  },
 };
 
 export default function PrivacidadPage() {

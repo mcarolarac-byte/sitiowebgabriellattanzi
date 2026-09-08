@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Contacto",
   description:
     "Escríbele a Gabriel Lattanzi o agenda una conversación directamente en su calendario. Atención presencial en Barcelona y online para todo el mundo.",
+  alternates: {
+    canonical: "/contacto",
+  },
   openGraph: {
     title: "Contacto — Gabriel Lattanzi",
     description:
