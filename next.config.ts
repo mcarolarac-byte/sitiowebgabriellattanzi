@@ -42,7 +42,8 @@ const securityHeaders = [
             // stats.g.doubleclick.net: señales de conversión de Google Ads vía gtag.
             // vercel.live: canal de datos del widget de feedback (solo en previews).
             "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://region1.analytics.google.com https://stats.g.doubleclick.net https://vercel.live",
-            "frame-src https://challenges.cloudflare.com",
+            // https://vercel.live: iframe del widget de feedback de previews (no aparece en producción).
+            "frame-src https://challenges.cloudflare.com https://vercel.live",
             "frame-ancestors 'self'",
             "base-uri 'self'",
             "form-action 'self'",
