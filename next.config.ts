@@ -28,15 +28,20 @@ const securityHeaders = [
             // con generación estática. Riesgo aceptado: sitio sin sesiones ni datos
             // sensibles en el cliente. Revisitar si se añaden flujos autenticados.
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com",
+            // https://vercel.live: widget de feedback de Vercel (solo activo en previews, inofensivo en producción).
+            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com https://vercel.live",
             // SHA-256 exactos de los <style> inline que inyecta Next.js en _not-found y _global-error.
             // Actualizar si se hace upgrade de Next.js (ejecutar: node scripts/csp-hashes.mjs).
             // 'unsafe-hashes' permite hashes en atributos style= (necesario para next/image y next-route-announcer).
             // Los tres hashes de estilo inline son de Next.js, no de código propio.
             "style-src 'self' 'unsafe-hashes' 'sha256-zlqnbDt84zf1iSefLU/ImC54isoprH/MRiVZGskwexk=' 'sha256-ZDrxqUOB4m/L0JWL/+gS52g1CRH0l/qwMhjTw5Z/Fsc=' 'sha256-32t0bJPIyxns/QqsW8RE3JGUERKnHL5RygHBgJvEanc=' 'sha256-Wwucq8eX2r0YFymkQhDXm5hN0+FfSvI3s4JSSaqa4iw=' 'sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='",
-            "img-src 'self' https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com data:",
+            // https://www.google.*: pixel de remarketing de Google Ads (ga-audiences). Se usa un wildcard
+            // de subdominio porque varía por país (google.es, google.com, etc.).
+            "img-src 'self' https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://*.google.com https://*.google.es data:",
             "font-src 'self'",
-            "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://region1.analytics.google.com",
+            // stats.g.doubleclick.net: señales de conversión de Google Ads vía gtag.
+            // vercel.live: canal de datos del widget de feedback (solo en previews).
+            "connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://*.ingest.de.sentry.io https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://region1.analytics.google.com https://stats.g.doubleclick.net https://vercel.live",
             "frame-src https://challenges.cloudflare.com",
             "frame-ancestors 'self'",
             "base-uri 'self'",
