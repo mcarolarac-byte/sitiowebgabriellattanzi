@@ -48,10 +48,17 @@ const securityHeaders = [
     : []),
 ];
 
-// Headers básicos para el Studio de Sanity. Sin CSP: el Studio carga
-// scripts y estilos dinámicamente (SPA compleja) y una CSP estricta
-// lo rompería. HSTS no es necesario aquí porque el navegador lo cachea
-// por origen y ya lo recibe en cualquier otra ruta del sitio.
+// Headers para el Studio de Sanity. HSTS no es necesario porque el navegador
+// lo cachea por origen y ya lo recibe en cualquier ruta del sitio público.
+//
+// CSP del Studio: Sanity Studio v5 es una SPA compleja que requiere:
+//   - 'unsafe-inline' + 'unsafe-eval' en script-src: carga módulos dinámicamente
+//     y usa eval() en el editor de texto enriquecido (ProseMirror).
+//   - 'unsafe-inline' en style-src: inyecta estilos en tiempo de ejecución.
+//   - worker-src blob:: usa Web Workers para la indexación local del contenido.
+//   - lh3.googleusercontent.com: avatares de Google del usuario autenticado.
+// Dominios auditados con DevTools (Network + console filter) en septiembre 2026.
+// Si se agrega un plugin de Sanity que carga recursos externos, revisar aquí.
 const studioHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
@@ -62,6 +69,34 @@ const studioHeaders = [
   },
   // Refuerza el noindex declarado en el metadata del layout del Studio.
   { key: "X-Robots-Tag", value: "noindex, nofollow" },
+  ...(isProd
+    ? [
+        {
+          key: "Content-Security-Policy",
+          value: [
+            "default-src 'self'",
+            // 'unsafe-eval' requerido por ProseMirror (editor de texto enriquecido de Sanity).
+            // 'unsafe-inline' requerido por la carga dinámica de módulos del Studio.
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.sanity.io https://*.sanity-cdn.com https://sanity-cdn.com https://core.sanity-cdn.com",
+            // Sanity inyecta estilos en tiempo de ejecución (CSS-in-JS y design system).
+            "style-src 'self' 'unsafe-inline' https://*.sanity.io https://*.sanity-cdn.com https://design-system-static.sanity.io",
+            // cdn.sanity.io: imágenes del contenido. lh3.googleusercontent.com: avatar del usuario.
+            // blob: para previsualizaciones de imágenes antes de subir.
+            "img-src 'self' https://cdn.sanity.io https://lh3.googleusercontent.com data: blob:",
+            // Tipografías del design system de Sanity.
+            "font-src 'self' https://design-system-static.sanity.io https://core.sanity-cdn.com https://*.sanity-cdn.com",
+            // API de Sanity, CDN y WebSockets (listener de cambios en tiempo real).
+            "connect-src 'self' https://*.sanity.io wss://*.sanity.io https://sanity-cdn.com https://core.sanity-cdn.com https://api.sanity.io",
+            // Web Workers para indexación local del contenido en el Studio.
+            "worker-src blob: 'self'",
+            "frame-ancestors 'self'",
+            "base-uri 'self'",
+            "form-action 'self'",
+            "object-src 'none'",
+          ].join("; "),
+        },
+      ]
+    : []),
 ];
 
 const nextConfig: NextConfig = {
