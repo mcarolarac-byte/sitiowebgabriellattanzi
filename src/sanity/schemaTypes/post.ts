@@ -43,7 +43,24 @@ export const postType = defineType({
       name: "body",
       title: "Contenido",
       type: "array",
-      of: [{ type: "block" }, { type: "image", options: { hotspot: true } }],
+      of: [
+        { type: "block" },
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Texto alternativo",
+              type: "string",
+              description:
+                "Describe la imagen para lectores de pantalla y buscadores.",
+            }),
+          ],
+        },
+      ],
+      description:
+        "No hace falta pegar el descargo de responsabilidad: la web lo agrega sola al final de cada artículo.",
       validation: (rule) => rule.required(),
     }),
     defineField({
