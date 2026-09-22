@@ -14,7 +14,7 @@ type Post = {
   title: string;
   slug: string;
   excerpt?: string;
-  coverImage?: Parameters<typeof urlForImage>[0];
+  coverImage?: Parameters<typeof urlForImage>[0] & { alt?: string };
   body: NonNullable<React.ComponentProps<typeof PortableText>["value"]>;
   publishedAt: string;
 };
@@ -52,18 +52,37 @@ export async function generateMetadata({
   };
 }
 
+// Descargo fijo que se muestra al final de todos los artículos, para que
+// Gabriel no tenga que pegarlo en cada uno.
+const DISCLAIMER =
+  "Descargo de responsabilidad: El contenido de este artículo tiene fines exclusivamente educativos e informativos. No constituye asesoramiento financiero, una recomendación de inversión ni una invitación a comprar o vender instrumentos financieros. Toda inversión implica riesgos de pérdida de capital.";
+
+// Lee ancho y alto del identificador del asset de Sanity
+// (formato "image-<id>-<ancho>x<alto>-<ext>") para respetar la proporción
+// original de cada imagen en lugar de recortarla.
+function imageDimensions(ref: string | undefined) {
+  const match = ref?.match(/-(\d+)x(\d+)-/);
+  if (!match) return { width: 1600, height: 1000 };
+  return { width: Number(match[1]), height: Number(match[2]) };
+}
+
 const components: PortableTextComponents = {
   types: {
-    image: ({ value }) => (
-      <div className="relative my-8 aspect-[16/10] overflow-hidden bg-paper-dim">
-        <Image
-          src={urlForImage(value).width(1200).url()}
-          alt={value.alt || ""}
-          fill
-          className="object-cover"
-        />
-      </div>
-    ),
+    image: ({ value }) => {
+      const { width, height } = imageDimensions(value?.asset?._ref);
+      return (
+        <figure className="mx-auto my-10 w-full max-w-xl">
+          <Image
+            src={urlForImage(value).width(1200).url()}
+            alt={value.alt || ""}
+            width={width}
+            height={height}
+            sizes="(max-width: 640px) 100vw, 576px"
+            className="h-auto w-full"
+          />
+        </figure>
+      );
+    },
   },
 };
 
@@ -94,7 +113,7 @@ export default async function BlogPostPage({
           <div className="relative my-10 aspect-[16/9] overflow-hidden bg-paper-dim">
             <Image
               src={urlForImage(post.coverImage).width(1400).url()}
-              alt=""
+              alt={post.coverImage.alt || ""}
               fill
               className="object-cover"
               priority
@@ -104,6 +123,9 @@ export default async function BlogPostPage({
         <div className="prose-financiero max-w-none font-body leading-relaxed text-slate">
           <PortableText value={post.body} components={components} />
         </div>
+        <p className="mt-12 border-t border-line pt-6 font-body text-xs leading-relaxed text-slate-soft">
+          {DISCLAIMER}
+        </p>
       </Container>
     </article>
   );
